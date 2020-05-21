@@ -59,6 +59,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Helps\NotifyPropertyChangedHelp.cs" />
+    <Compile Include="Helps\RelayCommand.cs" />
+    <Compile Include="ViewModels\SignInViewModel.cs" />
+    <Compile Include="ViewModels\SignUpViewModel.cs" />
     <Compile Include="Views\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
@@ -70,6 +74,9 @@
     </Compile>
     <Compile Include="Views\StartWindow.xaml.cs">
       <DependentUpon>StartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserAccountWindow.xaml.cs">
+      <DependentUpon>UserAccountWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -115,10 +122,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserAccountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icon.png" />
     <Resource Include="Assets\SteakHouse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\BusinessLogicLayer\" />
+    <Folder Include="Models\DataAccessLayer\" />
+    <Folder Include="Models\EntityLayer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Back.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

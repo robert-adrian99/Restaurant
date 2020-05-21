@@ -15,20 +15,20 @@ using System.Windows.Shapes;
 namespace Restaurant.Views
 {
     /// <summary>
-    /// Interaction logic for SignUpWindow.xaml
+    /// Interaction logic for UserAccountWindow.xaml
     /// </summary>
-    public partial class SignUpWindow : Window
+    public partial class UserAccountWindow : Window
     {
-        public SignUpWindow()
+        public UserAccountWindow()
         {
             InitializeComponent();
         }
 
         private void BackClick(object sender, RoutedEventArgs e)
         {
-            StartWindow startWindow = new StartWindow();
+            MenuWindow menuWindow = new MenuWindow();
             App.Current.MainWindow.Close();
-            App.Current.MainWindow = startWindow;
+            App.Current.MainWindow = menuWindow;
             App.Current.MainWindow.Show();
         }
 

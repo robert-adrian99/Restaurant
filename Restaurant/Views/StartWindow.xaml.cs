@@ -23,5 +23,38 @@ namespace Restaurant.Views
         {
             InitializeComponent();
         }
+
+        private void SignInClick(object sender, RoutedEventArgs e)
+        {
+            SignInWindow signInWindow = new SignInWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = signInWindow;
+            App.Current.MainWindow.Show();
+        }
+
+        private void SignUpClick(object sender, RoutedEventArgs e)
+        {
+            SignUpWindow signUpWindow = new SignUpWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = signUpWindow;
+            App.Current.MainWindow.Show();
+        }
+
+        private void NoAccountClick(object sender, RoutedEventArgs e)
+        {
+            MenuWindow menuWindow = new MenuWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = menuWindow;
+            App.Current.MainWindow.Show();
+        }
+
+        private void EmployeeSignInClick(object sender, RoutedEventArgs e)
+        {
+            SignInWindow signInWindow = new SignInWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = signInWindow;
+            App.Current.MainWindow.Show();
+        }
+
     }
 }

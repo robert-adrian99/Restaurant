@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.Views"
+        xmlns:ctx="clr-namespace:Restaurant.ViewModels"
         mc:Ignorable="d"
         Title="Steak House" Height="500" Width="500" Icon="/Restaurant;component/Assets/Icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <ctx:SignUpViewModel/>
+    </Window.DataContext>
+    
     <Window.Resources>
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#FF5A3F32"/>
@@ -27,30 +33,36 @@
     </Window.Resources>
     
     <Grid Background="#a5a58d">
+        
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="450">
 
-                <Image HorizontalAlignment="Center" Height="160" VerticalAlignment="Top" Width="200" Source="/Restaurant;component/Assets/SteakHouse.png"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Style="{StaticResource RoundedButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Width="60" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60" Click="BackClick">
+                        <Image Source="/Restaurant;component/Assets/Back.png" />
+                    </Button>
 
+                    <Image HorizontalAlignment="Center" Margin="50,0,0,0" Height="160" VerticalAlignment="Top" Width="200" Source="/Restaurant;component/Assets/SteakHouse.png"/>
+                </StackPanel>
                 <Label Content="FIRST NAME" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-                <TextBox HorizontalAlignment="Center" Height="50" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+                <TextBox HorizontalAlignment="Center" Height="50" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding FirstName}"/>
 
                 <Label Content="LAST NAME" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-                <TextBox HorizontalAlignment="Center" Height="50" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+                <TextBox HorizontalAlignment="Center" Height="50" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding LastName}"/>
 
                 <Label Content="EMAIL" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-                <TextBox HorizontalAlignment="Center" Height="50" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+                <TextBox HorizontalAlignment="Center" Height="50" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding Email}"/>
 
                 <Label Content="PHONE NUMBER" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-                <TextBox HorizontalAlignment="Center" Height="50"  MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+                <TextBox HorizontalAlignment="Center" Height="50"  MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding PhoneNumber}"/>
 
                 <Label Content="DELIVERY ADDRESS" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-                <TextBox HorizontalAlignment="Center" Height="50"  MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+                <TextBox HorizontalAlignment="Center" Height="50"  MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding Address}"/>
 
                 <Label Content="PASSWORD" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-                <PasswordBox HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="400" Background="Transparent" BorderBrush="Black" BorderThickness="2" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="400" Background="Transparent" BorderBrush="Black" BorderThickness="2" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
-                <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN UP" HorizontalAlignment="Center" Margin="0,40,0,50" Width="400" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60"/>
+                <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN UP" HorizontalAlignment="Center" Margin="0,40,0,50" Width="400" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60" Command="{Binding SignUpCommand}" CommandParameter="{Binding ElementName=passwordBox}"/>
                 
             </StackPanel>
         </ScrollViewer>

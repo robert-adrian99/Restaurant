@@ -23,5 +23,22 @@ namespace Restaurant.Views
         {
             InitializeComponent();
         }
+
+        private void BackClick(object sender, RoutedEventArgs e)
+        {
+            StartWindow startWindow = new StartWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = startWindow;
+            App.Current.MainWindow.Show();
+        }
+
+        private void AccountClick(object sender, RoutedEventArgs e)
+        {
+            UserAccountWindow userAccountWindow = new UserAccountWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = userAccountWindow;
+            App.Current.MainWindow.Show();
+        }
+
     }
 }
