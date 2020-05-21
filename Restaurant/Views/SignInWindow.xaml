@@ -25,13 +25,18 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid Background="#a5a58d">
-        <Image HorizontalAlignment="Left" Height="160" Margin="140,10,0,0" VerticalAlignment="Top" Width="200" Source="/Restaurant;component/Assets/SteakHouse.png"/>
         
+        <Image HorizontalAlignment="Left" Height="160" Margin="140,10,0,0" VerticalAlignment="Top" Width="200" Source="/Restaurant;component/Assets/SteakHouse.png"/>
+
         <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN IN" HorizontalAlignment="Left" Margin="40,380,0, 0" Width="400" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60"/>
+        
         <Label Content="EMAIL" HorizontalAlignment="Left" Margin="200,180,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
         <TextBox HorizontalAlignment="Left" Height="50" Margin="40,222,0,0" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+        
         <Label Content="PASSWORD" HorizontalAlignment="Left" Margin="180,280,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-        <TextBox HorizontalAlignment="Left" Height="50" Margin="40,320,0,0" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+        <PasswordBox HorizontalAlignment="Left" Margin="40,322,0,0" VerticalAlignment="Top" Height="50" Width="400" Background="Transparent" BorderBrush="Black" BorderThickness="2" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        
     </Grid>
 </Window>

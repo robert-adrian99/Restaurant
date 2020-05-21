@@ -25,10 +25,18 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid Background="#a5a58d">
+        
         <Image HorizontalAlignment="Left" Height="160" Margin="140,10,0,0" VerticalAlignment="Top" Width="200" Source="/Restaurant;component/Assets/SteakHouse.png"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN IN YOUR ACCOUNT" HorizontalAlignment="Left" Margin="40,170,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20"/>
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="CONTINUE WITHOUT ACCOUNT" HorizontalAlignment="Left" Margin="40,250,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20"/>
+        
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN IN YOUR ACCOUNT" HorizontalAlignment="Left" Margin="40,158,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20"/>
+        
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="CONTINUE WITHOUT ACCOUNT" HorizontalAlignment="Left" Margin="40,295,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20"/>
+        
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="CREATE ACCOUNT" HorizontalAlignment="Left" Margin="40,226,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20"/>
+        
         <Button Style="{StaticResource RoundedButtonStyle}" Content="EMPLOYEE ACCOUNT" HorizontalAlignment="Left" Margin="40,380,0, 0" Width="400" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60"/>
+        
     </Grid>
 </Window>
