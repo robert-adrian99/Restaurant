@@ -32,11 +32,11 @@ namespace Restaurant.Views
             App.Current.MainWindow.Show();
         }
 
-        private void AccountClick(object sender, RoutedEventArgs e)
+        private void OrdersClick(object sender, RoutedEventArgs e)
         {
-            UserAccountWindow userAccountWindow = new UserAccountWindow();
+            UserOrdersWindow userOrdersWindow = new UserOrdersWindow();
             App.Current.MainWindow.Close();
-            App.Current.MainWindow = userAccountWindow;
+            App.Current.MainWindow = userOrdersWindow;
             App.Current.MainWindow.Show();
         }
 

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Restaurant.Views
 {
     /// <summary>
-    /// Interaction logic for UserAccountWindow.xaml
+    /// Interaction logic for UserOrdersWindow.xaml
     /// </summary>
-    public partial class UserAccountWindow : Window
+    public partial class UserOrdersWindow : Window
     {
-        public UserAccountWindow()
+        public UserOrdersWindow()
         {
             InitializeComponent();
         }

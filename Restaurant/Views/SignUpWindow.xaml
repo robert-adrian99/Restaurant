@@ -62,7 +62,9 @@
                 <Label Content="PASSWORD" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
                 <PasswordBox x:Name="passwordBox" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50" Width="400" Background="Transparent" BorderBrush="Black" BorderThickness="2" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
-                <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN UP" HorizontalAlignment="Center" Margin="0,40,0,50" Width="400" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60" Command="{Binding SignUpCommand}" CommandParameter="{Binding ElementName=passwordBox}"/>
+                <Label Content="{Binding ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0" Height="35" Width="390" FontSize="20" FontFamily="Segoe UI Black" Foreground="Red" HorizontalContentAlignment="Center"/>
+
+                <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN UP" HorizontalAlignment="Center" Margin="0,20,0,50" Width="400" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60" Command="{Binding SignUpCommand}" CommandParameter="{Binding ElementName=passwordBox}"/>
                 
             </StackPanel>
         </ScrollViewer>
