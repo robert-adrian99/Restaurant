@@ -71,15 +71,35 @@
     </Compile>
     <Compile Include="Helps\NotifyPropertyChangedHelp.cs" />
     <Compile Include="Helps\RelayCommand.cs" />
+    <Compile Include="Helps\TemplateSelector.cs" />
     <Compile Include="Models\Allergen.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BusinessLogicLayer\CategoryBLL.cs" />
+    <Compile Include="Models\BusinessLogicLayer\MealBLL.cs" />
     <Compile Include="Models\BusinessLogicLayer\UserBLL.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity\ProductsDisplay.cs" />
+    <Compile Include="Models\GetActiveOrdersByUser_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetAllMenusWithPriceByCategory_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetAllOrdersByUser_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetEmployees_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByAllergen_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetProductsByCategory_Result.cs">
+      <DependentUpon>RestaurantModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Menu.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
@@ -122,7 +142,7 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
+    <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
@@ -132,6 +152,9 @@
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignUpViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="Views\DetailsWindow.xaml.cs">
+      <DependentUpon>DetailsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuNoAccountWindow.xaml.cs">
       <DependentUpon>MenuNoAccountWindow.xaml</DependentUpon>
     </Compile>
@@ -186,6 +209,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\DetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MenuNoAccountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,22 +243,22 @@
     <Resource Include="Assets\SteakHouse.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Models\RestaurantModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RestaurantModel.Context.cs</LastGenOutput>
       <DependentUpon>RestaurantModel.edmx</DependentUpon>
+      <LastGenOutput>RestaurantModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\RestaurantModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RestaurantModel.edmx</DependentUpon>
       <LastGenOutput>RestaurantModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Back.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

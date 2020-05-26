@@ -54,7 +54,7 @@
                 <TextBox HorizontalAlignment="Center" Height="50" MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding Email}"/>
 
                 <Label Content="PHONE NUMBER" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-                <TextBox HorizontalAlignment="Center" Height="50"  MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding PhoneNumber}"/>
+                <TextBox HorizontalAlignment="Center" Height="50" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding PhoneNumber}" MaxLength="10"/>
 
                 <Label Content="DELIVERY ADDRESS" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
                 <TextBox HorizontalAlignment="Center" Height="50"  MaxLength="35" VerticalAlignment="Top" Width="400" FontFamily="Segoe UI Black" FontSize="20" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" Text="{Binding Address}"/>

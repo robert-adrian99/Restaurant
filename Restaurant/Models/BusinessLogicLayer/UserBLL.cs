@@ -14,25 +14,25 @@ namespace Restaurant.Models.BusinessLogicLayer
         {
             try
             {
-                var userQuery = (from user in restaurantEntities.Users
+                var userQuery = (from user in restaurantEntities.User
                                  where user.Email.Equals(email) && user.Password.Equals(password)
                                  select user).First();
 
-                var query = (from user in restaurantEntities.Users
+                var query = (from user in restaurantEntities.User
                              select user)?.ToList();
 
                 foreach (var userInList in query)
                 {
                     userInList.Active = false;
 
-                    restaurantEntities.Users.Attach(userInList);
+                    restaurantEntities.User.Attach(userInList);
                     restaurantEntities.Entry(userInList).Property(x => x.Active).IsModified = true;
                     restaurantEntities.SaveChanges();
                 }
 
                 userQuery.Active = true;
 
-                restaurantEntities.Users.Attach(userQuery);
+                restaurantEntities.User.Attach(userQuery);
                 restaurantEntities.Entry(userQuery).Property(x => x.Active).IsModified = true;
                 restaurantEntities.SaveChanges();
             }
@@ -49,7 +49,7 @@ namespace Restaurant.Models.BusinessLogicLayer
         {
             try
             {
-                var query = (from user in restaurantEntities.Users
+                var query = (from user in restaurantEntities.User
                              select user)?.ToList();
 
                 foreach (var userInList in query)
@@ -64,7 +64,7 @@ namespace Restaurant.Models.BusinessLogicLayer
                 {
                     userInList.Active = false;
 
-                    restaurantEntities.Users.Attach(userInList);
+                    restaurantEntities.User.Attach(userInList);
                     restaurantEntities.Entry(userInList).Property(x => x.Active).IsModified = true;
                     restaurantEntities.SaveChanges();
                 }
@@ -82,7 +82,7 @@ namespace Restaurant.Models.BusinessLogicLayer
                     Active = true
                 };
 
-                restaurantEntities.Users.Add(newUser);
+                restaurantEntities.User.Add(newUser);
                 restaurantEntities.SaveChanges();
             }
             return true;

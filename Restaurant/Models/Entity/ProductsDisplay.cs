@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Models.Entity
 {
-    class ProductsDisplay
+    public class ProductsDisplay
     {
-
+        public string Name { get; set; }
+        public string Quantity { get; set; }
+        public string Price { get; set; }
     }
 }

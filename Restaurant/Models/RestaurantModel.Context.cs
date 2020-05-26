@@ -27,103 +27,58 @@ namespace Restaurant.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Allergen> Allergens { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<Allergen> Allergen { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<Menu_Product> Menu_Product { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Order_Menu> Order_Menu { get; set; }
         public virtual DbSet<Order_Product> Order_Product { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Product_Allergen> Product_Allergen { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<User> User { get; set; }
     
-        public virtual int GetActiveOrdersByUser()
+        public virtual ObjectResult<GetActiveOrdersByUser_Result> GetActiveOrdersByUser()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetActiveOrdersByUser");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveOrdersByUser_Result>("GetActiveOrdersByUser");
         }
     
-        public virtual int GetActiveUser()
+        public virtual ObjectResult<GetAllMenusWithPriceByCategory_Result> GetAllMenusWithPriceByCategory(string categoryName)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetActiveUser");
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("categoryName", categoryName) :
+                new ObjectParameter("categoryName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllMenusWithPriceByCategory_Result>("GetAllMenusWithPriceByCategory", categoryNameParameter);
         }
     
-        public virtual int GetAllCategories()
+        public virtual ObjectResult<GetAllOrdersByUser_Result> GetAllOrdersByUser()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAllCategories");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOrdersByUser_Result>("GetAllOrdersByUser");
         }
     
-        public virtual int GetAllMenus()
+        public virtual ObjectResult<GetEmployees_Result> GetEmployees()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAllMenus");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployees_Result>("GetEmployees");
         }
     
-        public virtual int GetAllOrdersByUser()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAllOrdersByUser");
-        }
-    
-        public virtual int GetAllProducts()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAllProducts");
-        }
-    
-        public virtual int GetAllUsers()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetAllUsers");
-        }
-    
-        public virtual int GetEmployees()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetEmployees");
-        }
-    
-        public virtual int GetProductsByAllergen(string allergen)
+        public virtual ObjectResult<GetProductsByAllergen_Result> GetProductsByAllergen(string allergen)
         {
             var allergenParameter = allergen != null ?
                 new ObjectParameter("allergen", allergen) :
                 new ObjectParameter("allergen", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetProductsByAllergen", allergenParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByAllergen_Result>("GetProductsByAllergen", allergenParameter);
         }
     
-        public virtual int GetProductsByCategory(string category)
+        public virtual ObjectResult<GetProductsByCategory_Result> GetProductsByCategory(string categoryName)
         {
-            var categoryParameter = category != null ?
-                new ObjectParameter("category", category) :
-                new ObjectParameter("category", typeof(string));
+            var categoryNameParameter = categoryName != null ?
+                new ObjectParameter("categoryName", categoryName) :
+                new ObjectParameter("categoryName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetProductsByCategory", categoryParameter);
-        }
-    
-        public virtual int InsertUser(string firstName, string lastName, string email, string phone, string address, string password)
-        {
-            var firstNameParameter = firstName != null ?
-                new ObjectParameter("firstName", firstName) :
-                new ObjectParameter("firstName", typeof(string));
-    
-            var lastNameParameter = lastName != null ?
-                new ObjectParameter("lastName", lastName) :
-                new ObjectParameter("lastName", typeof(string));
-    
-            var emailParameter = email != null ?
-                new ObjectParameter("email", email) :
-                new ObjectParameter("email", typeof(string));
-    
-            var phoneParameter = phone != null ?
-                new ObjectParameter("phone", phone) :
-                new ObjectParameter("phone", typeof(string));
-    
-            var addressParameter = address != null ?
-                new ObjectParameter("address", address) :
-                new ObjectParameter("address", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("password", password) :
-                new ObjectParameter("password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUser", firstNameParameter, lastNameParameter, emailParameter, phoneParameter, addressParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByCategory_Result>("GetProductsByCategory", categoryNameParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

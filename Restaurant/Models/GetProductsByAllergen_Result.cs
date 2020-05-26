@@ -10,14 +10,17 @@
 namespace Restaurant.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class GetProductsByAllergen_Result
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ProductID { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public int Quantity { get; set; }
+        public double TotalQuantity { get; set; }
+        public int CategoryID { get; set; }
+        public byte[] Image1 { get; set; }
+        public byte[] Image2 { get; set; }
+        public byte[] Image3 { get; set; }
     }
 }

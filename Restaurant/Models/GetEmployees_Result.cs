@@ -10,16 +10,9 @@
 namespace Restaurant.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class User
+    public partial class GetEmployees_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.Order = new HashSet<Order>();
-        }
-    
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -27,9 +20,5 @@ namespace Restaurant.Models
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Password { get; set; }
-        public bool Active { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order { get; set; }
     }
 }

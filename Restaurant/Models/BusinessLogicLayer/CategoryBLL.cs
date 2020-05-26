@@ -12,7 +12,7 @@ namespace Restaurant.Models.BusinessLogicLayer
 
         public List<string> GetCategories()
         {
-            var query = (from category in restaurantEntities.Categories
+            var query = (from category in restaurantEntities.Category
                          select category.Name)?.ToList();
             return query;
         }

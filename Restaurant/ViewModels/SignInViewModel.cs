@@ -84,9 +84,9 @@ namespace Restaurant.ViewModels
                 App.Current.MainWindow = menuWindow;
                 App.Current.MainWindow.Show();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Incorrect email or password!");
+                MessageBox.Show(ex.Message);
             }
         }
         #endregion

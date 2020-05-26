@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allergen">
           <Key>
             <PropertyRef Name="AllergenID" />
@@ -245,26 +245,16 @@
         </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetActiveOrdersByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetActiveUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetAllCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetAllMenus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllMenusWithPriceByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryName" Type="nchar" Mode="In" />
+        </Function>
         <Function Name="GetAllOrdersByUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetAllProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetEmployees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetProductsByAllergen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="allergen" Type="nchar" Mode="In" />
         </Function>
         <Function Name="GetProductsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="category" Type="nchar" Mode="In" />
-        </Function>
-        <Function Name="InsertUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="firstName" Type="nchar" Mode="In" />
-          <Parameter Name="lastName" Type="nchar" Mode="In" />
-          <Parameter Name="email" Type="nchar" Mode="In" />
-          <Parameter Name="phone" Type="nchar" Mode="In" />
-          <Parameter Name="address" Type="nchar" Mode="In" />
-          <Parameter Name="password" Type="nchar" Mode="In" />
+          <Parameter Name="categoryName" Type="nchar" Mode="In" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -296,7 +286,7 @@
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="RestaurantModelStoreContainer">
+        <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="Allergen" EntityType="Self.Allergen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
@@ -357,7 +347,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="RestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Allergen">
           <Key>
             <PropertyRef Name="AllergenID" />
@@ -372,8 +362,8 @@
           </Key>
           <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK_Menu_Category" FromRole="Category" ToRole="Menu" />
-          <NavigationProperty Name="Products" Relationship="Self.IDCategory" FromRole="Category" ToRole="Product" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_Menu_Category" FromRole="Category" ToRole="Menu" />
+          <NavigationProperty Name="Product" Relationship="Self.IDCategory" FromRole="Category" ToRole="Product" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -462,7 +452,7 @@
           <NavigationProperty Name="Allergen" Relationship="Self.FK_Product_Allergen_Allergen" FromRole="Product_Allergen" ToRole="Allergen" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Product_Allergen_Product" FromRole="Product_Allergen" ToRole="Product" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -484,7 +474,7 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Product_Allergen_Allergen">
           <End Role="Allergen" Type="Self.Allergen" Multiplicity="1" />
@@ -619,82 +609,72 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="RestaurantEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Allergens" EntityType="Self.Allergen" />
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="Allergen" EntityType="Self.Allergen" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" />
           <EntitySet Name="Menu_Product" EntityType="Self.Menu_Product" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="Order_Menu" EntityType="Self.Order_Menu" />
           <EntitySet Name="Order_Product" EntityType="Self.Order_Product" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="Product_Allergen" EntityType="Self.Product_Allergen" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
           <AssociationSet Name="FK_Product_Allergen_Allergen" Association="Self.FK_Product_Allergen_Allergen">
-            <End Role="Allergen" EntitySet="Allergens" />
+            <End Role="Allergen" EntitySet="Allergen" />
             <End Role="Product_Allergen" EntitySet="Product_Allergen" />
           </AssociationSet>
           <AssociationSet Name="FK_Menu_Category" Association="Self.FK_Menu_Category">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Menu" EntitySet="Menu" />
           </AssociationSet>
           <AssociationSet Name="IDCategory" Association="Self.IDCategory">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Product" EntitySet="Products" />
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK_MenuProduct_Menu" Association="Self.FK_MenuProduct_Menu">
-            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu" EntitySet="Menu" />
             <End Role="Menu_Product" EntitySet="Menu_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Menu_Menu" Association="Self.FK_Order_Menu_Menu">
-            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu" EntitySet="Menu" />
             <End Role="Order_Menu" EntitySet="Order_Menu" />
           </AssociationSet>
           <AssociationSet Name="FK_MenuProduct_Product" Association="Self.FK_MenuProduct_Product">
-            <End Role="Product" EntitySet="Products" />
+            <End Role="Product" EntitySet="Product" />
             <End Role="Menu_Product" EntitySet="Menu_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Menu_Order" Association="Self.FK_Order_Menu_Order">
-            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order" EntitySet="Order" />
             <End Role="Order_Menu" EntitySet="Order_Menu" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Product_Order" Association="Self.FK_Order_Product_Order">
-            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order" EntitySet="Order" />
             <End Role="Order_Product" EntitySet="Order_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Order" EntitySet="Orders" />
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Product_Product" Association="Self.FK_Order_Product_Product">
-            <End Role="Product" EntitySet="Products" />
+            <End Role="Product" EntitySet="Product" />
             <End Role="Order_Product" EntitySet="Order_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Allergen_Product" Association="Self.FK_Product_Allergen_Product">
-            <End Role="Product" EntitySet="Products" />
+            <End Role="Product" EntitySet="Product" />
             <End Role="Product_Allergen" EntitySet="Product_Allergen" />
           </AssociationSet>
-          <FunctionImport Name="GetActiveOrdersByUser" />
-          <FunctionImport Name="GetActiveUser" />
-          <FunctionImport Name="GetAllCategories" />
-          <FunctionImport Name="GetAllMenus" />
-          <FunctionImport Name="GetAllOrdersByUser" />
-          <FunctionImport Name="GetAllProducts" />
-          <FunctionImport Name="GetAllUsers" />
-          <FunctionImport Name="GetEmployees" />
-          <FunctionImport Name="GetProductsByAllergen">
+          <FunctionImport Name="GetActiveOrdersByUser" ReturnType="Collection(Models.GetActiveOrdersByUser_Result)" />
+          <FunctionImport Name="GetAllMenusWithPriceByCategory" ReturnType="Collection(Models.GetAllMenusWithPriceByCategory_Result)">
+            <Parameter Name="categoryName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllOrdersByUser" ReturnType="Collection(Models.GetAllOrdersByUser_Result)" />
+          <FunctionImport Name="GetEmployees" ReturnType="Collection(Models.GetEmployees_Result)" />
+          <FunctionImport Name="GetProductsByAllergen" ReturnType="Collection(Models.GetProductsByAllergen_Result)">
             <Parameter Name="allergen" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetProductsByCategory">
-            <Parameter Name="category" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="InsertUser">
-            <Parameter Name="firstName" Mode="In" Type="String" />
-            <Parameter Name="lastName" Mode="In" Type="String" />
-            <Parameter Name="email" Mode="In" Type="String" />
-            <Parameter Name="phone" Mode="In" Type="String" />
-            <Parameter Name="address" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="String" />
+          <FunctionImport Name="GetProductsByCategory" ReturnType="Collection(Models.GetProductsByCategory_Result)">
+            <Parameter Name="categoryName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -712,11 +692,11 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(RestaurantModel.sp_helpdiagramdefinition_Result)">
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Models.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(RestaurantModel.sp_helpdiagrams_Result)">
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Models.sp_helpdiagrams_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -727,6 +707,58 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+        <ComplexType Name="GetActiveOrdersByUser_Result">
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="Int32" Name="OrderNumber" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="Date" Nullable="false" Precision="23" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllMenusWithPriceByCategory_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Quantity" Nullable="true" />
+          <Property Type="Double" Name="Price" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllOrdersByUser_Result">
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="Int32" Name="OrderNumber" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="Date" Nullable="false" Precision="23" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetEmployees_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Phone" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByAllergen_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Double" Name="TotalQuantity" Nullable="false" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="Binary" Name="Image1" Nullable="true" MaxLength="Max" />
+          <Property Type="Binary" Name="Image2" Nullable="true" MaxLength="Max" />
+          <Property Type="Binary" Name="Image3" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByCategory_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Double" Name="TotalQuantity" Nullable="false" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="Binary" Name="Image1" Nullable="true" MaxLength="Max" />
+          <Property Type="Binary" Name="Image2" Nullable="true" MaxLength="Max" />
+          <Property Type="Binary" Name="Image3" Nullable="true" MaxLength="Max" />
+        </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -743,25 +775,25 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RestaurantModelStoreContainer" CdmEntityContainer="RestaurantEntities">
-          <EntitySetMapping Name="Allergens">
-            <EntityTypeMapping TypeName="RestaurantModel.Allergen">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="RestaurantEntities">
+          <EntitySetMapping Name="Allergen">
+            <EntityTypeMapping TypeName="Models.Allergen">
               <MappingFragment StoreEntitySet="Allergen">
                 <ScalarProperty Name="AllergenID" ColumnName="AllergenID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="RestaurantModel.Category">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="Models.Category">
               <MappingFragment StoreEntitySet="Category">
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="RestaurantModel.Menu">
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="Models.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -773,7 +805,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menu_Product">
-            <EntityTypeMapping TypeName="RestaurantModel.Menu_Product">
+            <EntityTypeMapping TypeName="Models.Menu_Product">
               <MappingFragment StoreEntitySet="Menu_Product">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="MenuID" ColumnName="MenuID" />
@@ -782,8 +814,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="RestaurantModel.Order">
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="Models.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
@@ -795,7 +827,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Menu">
-            <EntityTypeMapping TypeName="RestaurantModel.Order_Menu">
+            <EntityTypeMapping TypeName="Models.Order_Menu">
               <MappingFragment StoreEntitySet="Order_Menu">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
@@ -804,7 +836,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Product">
-            <EntityTypeMapping TypeName="RestaurantModel.Order_Product">
+            <EntityTypeMapping TypeName="Models.Order_Product">
               <MappingFragment StoreEntitySet="Order_Product">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
@@ -812,8 +844,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="RestaurantModel.Product">
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="Models.Product">
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -828,7 +860,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Product_Allergen">
-            <EntityTypeMapping TypeName="RestaurantModel.Product_Allergen">
+            <EntityTypeMapping TypeName="Models.Product_Allergen">
               <MappingFragment StoreEntitySet="Product_Allergen">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -837,7 +869,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="RestaurantModel.sysdiagram">
+            <EntityTypeMapping TypeName="Models.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -847,8 +879,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="RestaurantModel.User">
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="Models.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -861,31 +893,96 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetActiveOrdersByUser" FunctionName="RestaurantModel.Store.GetActiveOrdersByUser" />
-          <FunctionImportMapping FunctionImportName="GetActiveUser" FunctionName="RestaurantModel.Store.GetActiveUser" />
-          <FunctionImportMapping FunctionImportName="GetAllCategories" FunctionName="RestaurantModel.Store.GetAllCategories" />
-          <FunctionImportMapping FunctionImportName="GetAllMenus" FunctionName="RestaurantModel.Store.GetAllMenus" />
-          <FunctionImportMapping FunctionImportName="GetAllOrdersByUser" FunctionName="RestaurantModel.Store.GetAllOrdersByUser" />
-          <FunctionImportMapping FunctionImportName="GetAllProducts" FunctionName="RestaurantModel.Store.GetAllProducts" />
-          <FunctionImportMapping FunctionImportName="GetAllUsers" FunctionName="RestaurantModel.Store.GetAllUsers" />
-          <FunctionImportMapping FunctionImportName="GetEmployees" FunctionName="RestaurantModel.Store.GetEmployees" />
-          <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="RestaurantModel.Store.GetProductsByAllergen" />
-          <FunctionImportMapping FunctionImportName="GetProductsByCategory" FunctionName="RestaurantModel.Store.GetProductsByCategory" />
-          <FunctionImportMapping FunctionImportName="InsertUser" FunctionName="RestaurantModel.Store.InsertUser" />
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="RestaurantModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="RestaurantModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="RestaurantModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="RestaurantModel.Store.sp_helpdiagramdefinition">
+          <FunctionImportMapping FunctionImportName="GetActiveOrdersByUser" FunctionName="Models.Store.GetActiveOrdersByUser">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="RestaurantModel.sp_helpdiagramdefinition_Result">
+              <ComplexTypeMapping TypeName="Models.GetActiveOrdersByUser_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllMenusWithPriceByCategory" FunctionName="Models.Store.GetAllMenusWithPriceByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetAllMenusWithPriceByCategory_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllOrdersByUser" FunctionName="Models.Store.GetAllOrdersByUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetAllOrdersByUser_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetEmployees" FunctionName="Models.Store.GetEmployees">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetEmployees_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByAllergen" FunctionName="Models.Store.GetProductsByAllergen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetProductsByAllergen_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Image1" ColumnName="Image1" />
+                <ScalarProperty Name="Image2" ColumnName="Image2" />
+                <ScalarProperty Name="Image3" ColumnName="Image3" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByCategory" FunctionName="Models.Store.GetProductsByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetProductsByCategory_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Image1" ColumnName="Image1" />
+                <ScalarProperty Name="Image2" ColumnName="Image2" />
+                <ScalarProperty Name="Image3" ColumnName="Image3" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Models.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Models.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Models.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Models.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.sp_helpdiagramdefinition_Result">
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="RestaurantModel.Store.sp_helpdiagrams">
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Models.Store.sp_helpdiagrams">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="RestaurantModel.sp_helpdiagrams_Result">
+              <ComplexTypeMapping TypeName="Models.sp_helpdiagrams_Result">
                 <ScalarProperty Name="Database" ColumnName="Database" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -894,8 +991,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="RestaurantModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="RestaurantModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Models.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Models.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -910,7 +1007,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
