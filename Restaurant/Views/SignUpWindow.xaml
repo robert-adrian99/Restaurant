@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:Restaurant.Views"
         xmlns:ctx="clr-namespace:Restaurant.ViewModels"
         mc:Ignorable="d"
-        Title="Steak House" Height="500" Width="500" Icon="/Restaurant;component/Assets/Icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Steak House" Height="850" Width="500" Icon="/Restaurant;component/Assets/Icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <ctx:SignUpViewModel/>
     </Window.DataContext>
-    
+
     <Window.Resources>
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#FF5A3F32"/>
@@ -31,9 +31,9 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    
+
     <Grid Background="#a5a58d">
-        
+
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="450">
 
@@ -65,7 +65,7 @@
                 <Label Content="{Binding ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0" Height="35" Width="390" FontSize="20" FontFamily="Segoe UI Black" Foreground="Red" HorizontalContentAlignment="Center"/>
 
                 <Button Style="{StaticResource RoundedButtonStyle}" Content="SIGN UP" HorizontalAlignment="Center" Margin="0,20,0,50" Width="400" Cursor="Hand" BorderThickness="0" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Height="60" Command="{Binding SignUpCommand}" CommandParameter="{Binding ElementName=passwordBox}"/>
-                
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

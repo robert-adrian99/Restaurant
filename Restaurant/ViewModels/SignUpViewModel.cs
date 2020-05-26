@@ -42,7 +42,7 @@ namespace Restaurant.ViewModels
                         ErrorMessage = "";
                     }
                     ValidFirstName = true;
-                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber)
+                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber && ValidAddress)
                     {
                         CanExecuteCommand = true;
                     }
@@ -76,7 +76,7 @@ namespace Restaurant.ViewModels
                         ErrorMessage = "";
                     }
                     ValidLastName = true;
-                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber)
+                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber && ValidAddress)
                     {
                         CanExecuteCommand = true;
                     }
@@ -110,7 +110,7 @@ namespace Restaurant.ViewModels
                         ErrorMessage = "";
                     }
                     ValidEmail = true;
-                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber)
+                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber && ValidAddress)
                     {
                         CanExecuteCommand = true;
                     }
@@ -144,7 +144,7 @@ namespace Restaurant.ViewModels
                         ErrorMessage = "";
                     }
                     ValidPhoneNumber = true;
-                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber)
+                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber && ValidAddress)
                     {
                         CanExecuteCommand = true;
                     }
@@ -153,6 +153,7 @@ namespace Restaurant.ViewModels
             }
         }
 
+        private bool ValidAddress { get; set; } = false;
         private string address;
         public string Address
         {
@@ -163,6 +164,25 @@ namespace Restaurant.ViewModels
             set
             {
                 address = value;
+                Regex regex = new Regex(@"[A-Za-z\s]+[0-9]+");
+                if (regex.Match(address) == Match.Empty)
+                {
+                    ErrorMessage = "PLEASE ENTER A DELIVERY ADDRESS";
+                    ValidAddress = false;
+                    CanExecuteCommand = false;
+                }
+                else
+                {
+                    if (ErrorMessage == "PLEASE ENTER A DELIVERY ADDRESS")
+                    {
+                        ErrorMessage = "";
+                    }
+                    ValidAddress = true;
+                    if (ValidFirstName && ValidLastName && ValidEmail && ValidPhoneNumber && ValidAddress)
+                    {
+                        CanExecuteCommand = true;
+                    }
+                }
                 NotifyPropertyChanged("Address");
             }
         }
@@ -201,6 +221,13 @@ namespace Restaurant.ViewModels
         public void SignUp(object param)
         {
             string password = (param as PasswordBox).Password;
+
+            Regex regex = new Regex(@"@steak-house.com$");
+            if (regex.Match(email) != Match.Empty)
+            {
+                MessageBox.Show("Only the admin can create\nan employee account!", "Account creation failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
             // call method from UserBLL to add the user
         }
         #endregion
