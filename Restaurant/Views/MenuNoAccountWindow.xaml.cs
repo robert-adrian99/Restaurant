@@ -39,6 +39,5 @@ namespace Restaurant.Views
             App.Current.MainWindow = signUpWindow;
             App.Current.MainWindow.Show();
         }
-
     }
 }

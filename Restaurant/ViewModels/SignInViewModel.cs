@@ -8,15 +8,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Restaurant.Helps;
+using Restaurant.Models.BusinessLogicLayer;
+using Restaurant.Views;
 
 namespace Restaurant.ViewModels
 {
     public class SignInViewModel : NotifyPropertyChangedHelp
     {
-
-        // UserBLL user = new UserBLL();
-
-
         #region DataMembers
         private string email;
         public string Email
@@ -58,7 +56,6 @@ namespace Restaurant.ViewModels
         }
         #endregion
 
-
         #region CommandMembers
         public bool CanExecuteCommand { get; set; } = false;
 
@@ -78,9 +75,20 @@ namespace Restaurant.ViewModels
         public void SignIn(object param)
         {
             string password = (param as PasswordBox).Password;
-            // call method from UserBLL to validate the email and password
+            UserBLL user = new UserBLL();
+            try
+            {
+                user.SignIn(Email, password);
+                MenuWindow menuWindow = new MenuWindow();
+                App.Current.MainWindow.Close();
+                App.Current.MainWindow = menuWindow;
+                App.Current.MainWindow.Show();
+            }
+            catch
+            {
+                MessageBox.Show("Incorrect email or password!");
+            }
         }
         #endregion
-
     }
 }

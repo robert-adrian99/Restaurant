@@ -8,14 +8,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Restaurant.Helps;
+using Restaurant.Models.BusinessLogicLayer;
+using Restaurant.Views;
 
 namespace Restaurant.ViewModels
 {
     public class SignUpViewModel : NotifyPropertyChangedHelp
     {
-
-        // UserBLL user = new UserBLL();
-
         #region DataMembers
         private bool ValidFirstName { get; set; } = false;
         private string firstName;
@@ -202,7 +201,6 @@ namespace Restaurant.ViewModels
         }
         #endregion
 
-
         #region CommandMembers
         private bool CanExecuteCommand { get; set; } = false;
         private ICommand signUpCommand;
@@ -227,8 +225,21 @@ namespace Restaurant.ViewModels
             {
                 MessageBox.Show("Only the admin can create\nan employee account!", "Account creation failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            // call method from UserBLL to add the user
+            else
+            {
+                UserBLL user = new UserBLL();
+                if (!user.SignUp(FirstName, LastName, Email, PhoneNumber, Address, password))
+                {
+                    MessageBox.Show("There is already an account with this email");
+                }
+                else
+                {
+                    MenuWindow menuWindow = new MenuWindow();
+                    App.Current.MainWindow.Close();
+                    App.Current.MainWindow = menuWindow;
+                    App.Current.MainWindow.Show();
+                }
+            }
         }
         #endregion
     }
