@@ -262,6 +262,9 @@
         <Function Name="GetProductsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="categoryName" Type="nchar" Mode="In" />
         </Function>
+        <Function Name="GetProductsByMenu" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="menuName" Type="nchar" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -717,6 +720,9 @@
           <FunctionImport Name="GetAllergensByMenu" ReturnType="Collection(String)">
           <Parameter Name="menuName" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetProductsByMenu" ReturnType="Collection(Models.GetProductsByMenu_Result)">
+            <Parameter Name="menuName" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetActiveOrdersByUser_Result">
           <Property Type="Int32" Name="OrderID" Nullable="false" />
@@ -780,6 +786,12 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetProductsByMenu_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+          <Property Type="Double" Name="Quantity" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1006,6 +1018,16 @@
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Models.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Models.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="GetAllergensByMenu" FunctionName="Models.Store.GetAllergensByMenu" />
+          <FunctionImportMapping FunctionImportName="GetProductsByMenu" FunctionName="Models.Store.GetProductsByMenu">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetProductsByMenu_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

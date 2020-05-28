@@ -56,9 +56,9 @@
 
         <Label Content="Product Name" FontFamily="Segoe UI Black" FontSize="20" Margin="50,167,773,464" Width="200" Height="40"/>
 
-        <Label Content="Quantity" FontFamily="Segoe UI Black" FontSize="20" Margin="449,167,445,464" Height="40" Width="110"/>
+        <Label Content="Quantity (g)" FontFamily="Segoe UI Black" FontSize="20" Margin="449,167,397,464" Height="40"/>
 
-        <Label Content="Price" FontFamily="Segoe UI Black" FontSize="20" Margin="744,167,180,464" Height="40"/>
+        <Label Content="Price ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="744,167,132,464" Height="40" Width="120"/>
 
         <ListBox HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="900" Margin="50,210,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding ProductsDisplay}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItemList}"/>
 
@@ -69,6 +69,8 @@
         <Button Style="{StaticResource RoundedButtonStyle}" Content="DETAILS ABOUT PRODUCT" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="300" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding SeeDetailsCommand}"/>
 
         <Button Style="{StaticResource RoundedButtonStyle}" Content="SEE YOUR ORDERS" HorizontalAlignment="Right" Margin="0,75,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Click="OrdersClick"/>
+
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEARCH" HorizontalAlignment="Right" Margin="0,10,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Click="SearchClick"/>
 
     </Grid>
 </Window>

@@ -40,5 +40,9 @@ namespace Restaurant.Views
             App.Current.MainWindow.Show();
         }
 
+        private void SearchClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

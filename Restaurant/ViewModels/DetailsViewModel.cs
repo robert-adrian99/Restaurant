@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Restaurant.Helps;
+using Restaurant.Models;
 using Restaurant.Models.BusinessLogicLayer;
 using Restaurant.Models.Entity;
 
@@ -35,7 +36,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                return productsDisplay.Quantity.ToUpper();
+                return productsDisplay.Quantity.ToUpper() + " g";
             }
         }
 
@@ -43,7 +44,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                return productsDisplay.Price.ToUpper();
+                return productsDisplay.Price.ToUpper() + " $";
             }
         }
 
@@ -76,6 +77,30 @@ namespace Restaurant.ViewModels
             get
             {
                 return new ObservableCollection<string>(productsDisplay.Allergens);
+            }
+        }
+
+        public string ProductsLabel
+        {
+            get
+            {
+                if (productsDisplay.ProductType == ProductTypeEnum.Menu)
+                {
+                    return "PRODUCTS:";
+                }
+                return "";
+            }
+        }
+
+        public List<Product> Products
+        {
+            get
+            {
+                if(productsDisplay.ProductType == ProductTypeEnum.Menu)
+                {
+                    return productsDisplay.Products;
+                }
+                return new List<Product>();
             }
         }
     }

@@ -201,5 +201,14 @@ namespace Restaurant.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergensByMenu", menuNameParameter);
         }
+    
+        public virtual ObjectResult<GetProductsByMenu_Result> GetProductsByMenu(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("menuName", menuName) :
+                new ObjectParameter("menuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByMenu_Result>("GetProductsByMenu", menuNameParameter);
+        }
     }
 }
