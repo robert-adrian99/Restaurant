@@ -44,6 +44,15 @@ namespace Restaurant.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveOrdersByUser_Result>("GetActiveOrdersByUser");
         }
     
+        public virtual ObjectResult<string> GetAllergensByProduct(string productName)
+        {
+            var productNameParameter = productName != null ?
+                new ObjectParameter("productName", productName) :
+                new ObjectParameter("productName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergensByProduct", productNameParameter);
+        }
+    
         public virtual ObjectResult<GetAllMenusWithPriceByCategory_Result> GetAllMenusWithPriceByCategory(string categoryName)
         {
             var categoryNameParameter = categoryName != null ?
@@ -182,6 +191,15 @@ namespace Restaurant.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<string> GetAllergensByMenu(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("menuName", menuName) :
+                new ObjectParameter("menuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergensByMenu", menuNameParameter);
         }
     }
 }

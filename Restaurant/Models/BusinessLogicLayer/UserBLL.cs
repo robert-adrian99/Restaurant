@@ -10,7 +10,7 @@ namespace Restaurant.Models.BusinessLogicLayer
     {
         private RestaurantEntities restaurantEntities = new RestaurantEntities();
 
-        public bool SignIn(string email, string password)
+        public void SignIn(string email, string password)
         {
             try
             {
@@ -40,9 +40,6 @@ namespace Restaurant.Models.BusinessLogicLayer
             {
                 throw new Exception();
             }
-            return true;
-
-            //var query = restaurantEntities.GetAllUsers(); // procedura stocata
         }
 
         public bool SignUp(string firstName, string lastName, string email, string phone, string address, string password)

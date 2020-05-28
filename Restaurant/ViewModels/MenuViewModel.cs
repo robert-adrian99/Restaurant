@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 using Restaurant.Helps;
 using Restaurant.Models;
@@ -73,6 +74,7 @@ namespace Restaurant.ViewModels
             set
             {
                 selectedItemCombobox = value;
+                CanExecuteCommand = false;
                 NotifyPropertyChanged("SelectedItemCombobox");
                 ProductsDisplay = new ObservableCollection<ProductsDisplay>(mealBLL.GetProductsByCategory(SelectedItemCombobox));
             }
@@ -123,8 +125,17 @@ namespace Restaurant.ViewModels
 
         public void SeeDetails(object param)
         {
-            DetailsWindow detailsWindow = new DetailsWindow();
-            detailsWindow.ShowDialog();
+            if (SelectedItemList == null)
+            {
+                MessageBox.Show("Select a product");
+            }
+            else
+            {
+                DetailsWindow detailsWindow = new DetailsWindow();
+                DetailsViewModel detailsViewModel = new DetailsViewModel(selectedItemList.Name);
+                detailsWindow.DataContext = detailsViewModel;
+                detailsWindow.ShowDialog();
+            }
         }
 
     }

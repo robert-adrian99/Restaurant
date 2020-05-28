@@ -7,10 +7,21 @@ using System.Threading.Tasks;
 
 namespace Restaurant.Models.Entity
 {
+    public enum ProductTypeEnum
+    {
+        Product,
+        Menu
+    }
+
     public class ProductsDisplay
     {
         public string Name { get; set; }
         public string Quantity { get; set; }
         public string Price { get; set; }
+        public byte[] Image1 { get; set; }
+        public byte[] Image2 { get; set; }
+        public byte[] Image3 { get; set; }
+        public List<string> Allergens { get; set; }
+        public ProductTypeEnum ProductType { get; set; }
     }
 }

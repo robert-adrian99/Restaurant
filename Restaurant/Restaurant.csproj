@@ -45,6 +45,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
@@ -148,6 +149,7 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\DetailsViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignUpViewModel.cs" />

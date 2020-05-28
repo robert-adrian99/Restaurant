@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Restaurant.Helps;
+using Restaurant.Models;
 using Restaurant.Models.BusinessLogicLayer;
 using Restaurant.Views;
 
@@ -84,9 +85,9 @@ namespace Restaurant.ViewModels
                 App.Current.MainWindow = menuWindow;
                 App.Current.MainWindow.Show();
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Incorrect email or password!");
             }
         }
         #endregion
