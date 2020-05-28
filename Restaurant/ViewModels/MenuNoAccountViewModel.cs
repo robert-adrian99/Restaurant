@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Security.AccessControl;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Restaurant.Helps;
-using Restaurant.Models;
 using Restaurant.Models.BusinessLogicLayer;
 using Restaurant.Models.Entity;
 using Restaurant.Views;
 
 namespace Restaurant.ViewModels
 {
-    public class MenuViewModel : NotifyPropertyChangedHelp
+    public class MenuNoAccountViewModel : NotifyPropertyChangedHelp
     {
         private CategoryBLL categoryBLL = new CategoryBLL();
         private MealBLL mealBLL = new MealBLL();
 
-        public MenuViewModel()
+        public MenuNoAccountViewModel()
         {
             Categories = new ObservableCollection<string>(categoryBLL.GetCategories());
             for (int index = 0; index < Categories.Count; index++)

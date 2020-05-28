@@ -103,5 +103,29 @@ namespace Restaurant.ViewModels
                 return new List<Product>();
             }
         }
+
+        public string Gramms
+        {
+            get
+            {
+                if (productsDisplay.ProductType == ProductTypeEnum.Menu)
+                {
+                    return "g";
+                }
+                return "";
+            }
+        }
+
+        public string Dollars
+        {
+            get
+            {
+                if (productsDisplay.ProductType == ProductTypeEnum.Menu)
+                {
+                    return "$";
+                }
+                return "";
+            }
+        }
     }
 }

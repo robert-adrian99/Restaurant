@@ -42,7 +42,8 @@ namespace Restaurant.Views
 
         private void SearchClick(object sender, RoutedEventArgs e)
         {
-
+            SearchWindow searchWindow = new SearchWindow();
+            searchWindow.ShowDialog();
         }
     }
 }

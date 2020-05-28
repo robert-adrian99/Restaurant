@@ -23,5 +23,10 @@ namespace Restaurant.Views
         {
             InitializeComponent();
         }
+
+        private void BackClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

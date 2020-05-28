@@ -71,6 +71,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helps\NotifyPropertyChangedHelp.cs" />
+    <Compile Include="Helps\ProductEqualityComparer.cs" />
     <Compile Include="Helps\RelayCommand.cs" />
     <Compile Include="Helps\TemplateSelector.cs" />
     <Compile Include="Models\Allergen.cs">
@@ -153,6 +154,7 @@
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DetailsViewModel.cs" />
+    <Compile Include="ViewModels\MenuNoAccountViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />

@@ -44,44 +44,40 @@ namespace Restaurant.Models.BusinessLogicLayer
 
         public bool SignUp(string firstName, string lastName, string email, string phone, string address, string password)
         {
-            try
+
+            var query = (from user in restaurantEntities.User
+                         select user)?.ToList();
+
+            foreach (var userInList in query)
             {
-                var query = (from user in restaurantEntities.User
-                             select user)?.ToList();
-
-                foreach (var userInList in query)
+                if (userInList.Email.Contains(email))
                 {
-                    if (userInList.Email == email)
-                    {
-                        return false;
-                    }
-                }
-
-                foreach (var userInList in query)
-                {
-                    userInList.Active = false;
-
-                    restaurantEntities.User.Attach(userInList);
-                    restaurantEntities.Entry(userInList).Property(x => x.Active).IsModified = true;
-                    restaurantEntities.SaveChanges();
+                    return false;
                 }
             }
-            finally
-            {
-                User newUser = new User()
-                {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Email = email,
-                    Phone = phone,
-                    Address = address,
-                    Password = password,
-                    Active = true
-                };
 
-                restaurantEntities.User.Add(newUser);
+            foreach (var userInList in query)
+            {
+                userInList.Active = false;
+
+                restaurantEntities.User.Attach(userInList);
+                restaurantEntities.Entry(userInList).Property(x => x.Active).IsModified = true;
                 restaurantEntities.SaveChanges();
             }
+
+            User newUser = new User()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Email = email,
+                Phone = phone,
+                Address = address,
+                Password = password,
+                Active = true
+            };
+
+            restaurantEntities.User.Add(newUser);
+            restaurantEntities.SaveChanges();
             return true;
         }
     }

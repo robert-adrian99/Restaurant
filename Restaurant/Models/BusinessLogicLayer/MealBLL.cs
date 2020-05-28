@@ -1,4 +1,5 @@
-﻿using Restaurant.Models.Entity;
+﻿using Restaurant.Helps;
+using Restaurant.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ namespace Restaurant.Models.BusinessLogicLayer
     class MealBLL
     {
         private RestaurantEntities restaurantEntities = new RestaurantEntities();
+        private ProductEqualityComparer productEqualityComparer = new ProductEqualityComparer();
 
         private double MenuPriceAfterDiscount(double price)
         {
@@ -22,126 +24,294 @@ namespace Restaurant.Models.BusinessLogicLayer
 
         public List<ProductsDisplay> GetProductsContainingInName(string productName, bool containing)
         {
-            var query = (from product in restaurantEntities.Product
-                         where containing && product.Name.Contains(productName)
-                         select new ProductsDisplay
-                         {
-                             Name = product.Name,
-                             Quantity = product.Quantity.ToString(),
-                             Price = product.Price.ToString(),
-                             CategoryName = product.Category.Name,
-                             Image1 = product.Image1,
-                             Image2 = product.Image2,
-                             Image3 = product.Image3,
-                             ProductType = ProductTypeEnum.Product
-                         }).ToList();
-            foreach (var product in query)
+            if (containing)
             {
-                product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
-            }
+                var query = (from product in restaurantEntities.Product
+                             where product.Name.Contains(productName)
+                             select new ProductsDisplay
+                             {
+                                 Name = product.Name,
+                                 Quantity = product.Quantity.ToString(),
+                                 Price = product.Price.ToString(),
+                                 CategoryName = product.Category.Name,
+                                 Image1 = product.Image1,
+                                 Image2 = product.Image2,
+                                 Image3 = product.Image3,
+                                 ProductType = ProductTypeEnum.Product
+                             }).ToList();
 
-            var query1 = (from menu in restaurantEntities.Menu
-                          where containing && menu.Name.Contains(productName)
-                          select new ProductsDisplay
-                          {
-                              Name = menu.Name,
-                              Quantity = (from menu_product in restaurantEntities.Menu_Product
-                                          where menu.MenuID.Equals(menu_product.MenuID)
-                                          select menu_product.Quantity).Sum().ToString(),
-                              Price = (from product in restaurantEntities.Product
-                                       join menu_product in restaurantEntities.Menu_Product
-                                       on product.ProductID equals menu_product.ProductID
-                                       where menu.MenuID.Equals(menu_product.MenuID)
-                                       select product.Price).Sum().ToString(),
-                              CategoryName = menu.Category.Name,
-                              Image1 = menu.Image1,
-                              Image2 = menu.Image2,
-                              Image3 = menu.Image3,
-                              ProductType = ProductTypeEnum.Menu
-                          }).ToList();
+                query = query.Distinct(productEqualityComparer).ToList();
 
-            foreach (var product in query1)
-            {
-                product.Allergens = restaurantEntities.GetAllergensByMenu(product.Name).ToList();
-                var list = restaurantEntities.GetProductsByMenu(product.Name).ToList();
-                product.Products = new List<Product>();
-                foreach (var product1 in list)
+                foreach (var product in query)
                 {
-                    product.Products.Add(new Product()
-                    {
-                        ProductID = product1.ProductID,
-                        Name = product1.Name,
-                        Quantity = (int)product1.Quantity,
-                        Price = product1.Price
-                    });
+                    product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
                 }
+
+                var query1 = (from menu in restaurantEntities.Menu
+                              where menu.Name.Contains(productName)
+                              select new ProductsDisplay
+                              {
+                                  Name = menu.Name,
+                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                              where menu.MenuID.Equals(menu_product.MenuID)
+                                              select menu_product.Quantity).Sum().ToString(),
+                                  Price = (from product in restaurantEntities.Product
+                                           join menu_product in restaurantEntities.Menu_Product
+                                           on product.ProductID equals menu_product.ProductID
+                                           where menu.MenuID.Equals(menu_product.MenuID)
+                                           select product.Price).Sum().ToString(),
+                                  CategoryName = menu.Category.Name,
+                                  Image1 = menu.Image1,
+                                  Image2 = menu.Image2,
+                                  Image3 = menu.Image3,
+                                  ProductType = ProductTypeEnum.Menu
+                              }).ToList();
+
+                foreach (var product in query1)
+                {
+                    product.Allergens = restaurantEntities.GetAllergensByMenu(product.Name).ToList();
+                    var list = restaurantEntities.GetProductsByMenu(product.Name).ToList();
+                    product.Products = new List<Product>();
+                    foreach (var product1 in list)
+                    {
+                        product.Products.Add(new Product()
+                        {
+                            ProductID = product1.ProductID,
+                            Name = product1.Name,
+                            Quantity = (int)product1.Quantity,
+                            Price = product1.Price
+                        });
+                    }
+                }
+
+                query1 = query1.Distinct(productEqualityComparer).ToList();
+
+                query.AddRange(query1);
+                return query;
             }
-            query.AddRange(query1);
-            return query;
+            else
+            {
+                var query = (from product in restaurantEntities.Product
+                             where !product.Name.Contains(productName)
+                             select new ProductsDisplay
+                             {
+                                 Name = product.Name,
+                                 Quantity = product.Quantity.ToString(),
+                                 Price = product.Price.ToString(),
+                                 CategoryName = product.Category.Name,
+                                 Image1 = product.Image1,
+                                 Image2 = product.Image2,
+                                 Image3 = product.Image3,
+                                 ProductType = ProductTypeEnum.Product
+                             }).ToList();
+
+                query = query.Distinct(productEqualityComparer).ToList();
+
+                foreach (var product in query)
+                {
+                    product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
+                }
+
+                var query1 = (from menu in restaurantEntities.Menu
+                              where !menu.Name.Contains(productName)
+                              select new ProductsDisplay
+                              {
+                                  Name = menu.Name,
+                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                              where menu.MenuID.Equals(menu_product.MenuID)
+                                              select menu_product.Quantity).Sum().ToString(),
+                                  Price = (from product in restaurantEntities.Product
+                                           join menu_product in restaurantEntities.Menu_Product
+                                           on product.ProductID equals menu_product.ProductID
+                                           where menu.MenuID.Equals(menu_product.MenuID)
+                                           select product.Price).Sum().ToString(),
+                                  CategoryName = menu.Category.Name,
+                                  Image1 = menu.Image1,
+                                  Image2 = menu.Image2,
+                                  Image3 = menu.Image3,
+                                  ProductType = ProductTypeEnum.Menu
+                              }).ToList();
+
+                foreach (var product in query1)
+                {
+                    product.Allergens = restaurantEntities.GetAllergensByMenu(product.Name).ToList();
+                    var list = restaurantEntities.GetProductsByMenu(product.Name).ToList();
+                    product.Products = new List<Product>();
+                    foreach (var product1 in list)
+                    {
+                        product.Products.Add(new Product()
+                        {
+                            ProductID = product1.ProductID,
+                            Name = product1.Name,
+                            Quantity = (int)product1.Quantity,
+                            Price = product1.Price
+                        });
+                    }
+                }
+
+                query1 = query1.Distinct(productEqualityComparer).ToList();
+
+                query.AddRange(query1);
+                return query;
+            }
         }
 
         public List<ProductsDisplay> GetProductsContainingAllergen(string allergenName, bool containing)
         {
-            var query = (from product in restaurantEntities.Product
-                         where containing && 
-                                (product.Product_Allergen.Where(x => x.ProductID == product.ProductID).First() != null ? true : false)
-                         select new ProductsDisplay
-                         {
-                             Name = product.Name,
-                             Quantity = product.Quantity.ToString(),
-                             Price = product.Price.ToString(),
-                             CategoryName = product.Category.Name,
-                             Image1 = product.Image1,
-                             Image2 = product.Image2,
-                             Image3 = product.Image3,
-                             ProductType = ProductTypeEnum.Product
-                         }).ToList();
-            foreach (var product in query)
+            if (containing)
             {
-                product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
-            }
+                var query = (from product in restaurantEntities.Product
+                             join product_allergen in restaurantEntities.Product_Allergen
+                             on product.ProductID equals product_allergen.AllergenID
+                             join allergen in restaurantEntities.Allergen
+                             on product_allergen.AllergenID equals allergen.AllergenID
+                             where allergen.Name.Contains(allergenName)
+                             select new ProductsDisplay
+                             {
+                                 Name = product.Name,
+                                 Quantity = product.Quantity.ToString(),
+                                 Price = product.Price.ToString(),
+                                 CategoryName = product.Category.Name,
+                                 Image1 = product.Image1,
+                                 Image2 = product.Image2,
+                                 Image3 = product.Image3,
+                                 ProductType = ProductTypeEnum.Product
+                             }).ToList();
 
-            var query1 = (from menu in restaurantEntities.Menu
-                          where containing &&
-                                (menu.Menu_Product.Where(x => x.MenuID == menu.MenuID).First() != null ? true : false)
+                query = query.Distinct(productEqualityComparer).ToList();
 
-                                // todo
-                          select new ProductsDisplay
-                          {
-                              Name = menu.Name,
-                              Quantity = (from menu_product in restaurantEntities.Menu_Product
-                                          where menu.MenuID.Equals(menu_product.MenuID)
-                                          select menu_product.Quantity).Sum().ToString(),
-                              Price = (from product in restaurantEntities.Product
-                                       join menu_product in restaurantEntities.Menu_Product
-                                       on product.ProductID equals menu_product.ProductID
-                                       where menu.MenuID.Equals(menu_product.MenuID)
-                                       select product.Price).Sum().ToString(),
-                              CategoryName = menu.Category.Name,
-                              Image1 = menu.Image1,
-                              Image2 = menu.Image2,
-                              Image3 = menu.Image3,
-                              ProductType = ProductTypeEnum.Menu
-                          }).ToList();
-
-            foreach (var product in query1)
-            {
-                product.Allergens = restaurantEntities.GetAllergensByMenu(product.Name).ToList();
-                var list = restaurantEntities.GetProductsByMenu(product.Name).ToList();
-                product.Products = new List<Product>();
-                foreach (var product1 in list)
+                foreach (var product in query)
                 {
-                    product.Products.Add(new Product()
-                    {
-                        ProductID = product1.ProductID,
-                        Name = product1.Name,
-                        Quantity = (int)product1.Quantity,
-                        Price = product1.Price
-                    });
+                    product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
                 }
+
+                var query1 = (from menu in restaurantEntities.Menu
+                              join menu_product in restaurantEntities.Menu_Product
+                              on menu.MenuID equals menu_product.MenuID
+                              join product in restaurantEntities.Product
+                              on menu_product.ProductID equals product.ProductID
+                              join product_allergen in restaurantEntities.Product_Allergen
+                              on product.ProductID equals product_allergen.ProductID
+                              join allergen in restaurantEntities.Allergen
+                              on product_allergen.AllergenID equals allergen.AllergenID
+                              where allergen.Name.Contains(allergenName)
+                              select new ProductsDisplay
+                              {
+                                  Name = menu.Name,
+                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                              where menu.MenuID.Equals(menu_product.MenuID)
+                                              select menu_product.Quantity).Sum().ToString(),
+                                  Price = (from product in restaurantEntities.Product
+                                           join menu_product in restaurantEntities.Menu_Product
+                                           on product.ProductID equals menu_product.ProductID
+                                           where menu.MenuID.Equals(menu_product.MenuID)
+                                           select product.Price).Sum().ToString(),
+                                  CategoryName = menu.Category.Name,
+                                  Image1 = menu.Image1,
+                                  Image2 = menu.Image2,
+                                  Image3 = menu.Image3,
+                                  ProductType = ProductTypeEnum.Menu
+                              }).ToList();
+
+                foreach (var product in query1)
+                {
+                    product.Allergens = restaurantEntities.GetAllergensByMenu(product.Name).ToList();
+                    var list = restaurantEntities.GetProductsByMenu(product.Name).ToList();
+                    product.Products = new List<Product>();
+                    foreach (var product1 in list)
+                    {
+                        product.Products.Add(new Product()
+                        {
+                            ProductID = product1.ProductID,
+                            Name = product1.Name,
+                            Quantity = (int)product1.Quantity,
+                            Price = product1.Price
+                        });
+                    }
+                }
+
+                query1 = query1.Distinct(productEqualityComparer).ToList();
+
+                query.AddRange(query1);
+                return query;
             }
-            query.AddRange(query1);
-            return query;
+            else
+            {
+                var query = (from product in restaurantEntities.Product
+                             join product_allergen in restaurantEntities.Product_Allergen
+                             on product.ProductID equals product_allergen.AllergenID
+                             join allergen in restaurantEntities.Allergen
+                             on product_allergen.AllergenID equals allergen.AllergenID
+                             where !allergen.Name.Contains(allergenName)
+                             select new ProductsDisplay
+                             {
+                                 Name = product.Name,
+                                 Quantity = product.Quantity.ToString(),
+                                 Price = product.Price.ToString(),
+                                 CategoryName = product.Category.Name,
+                                 Image1 = product.Image1,
+                                 Image2 = product.Image2,
+                                 Image3 = product.Image3,
+                                 ProductType = ProductTypeEnum.Product
+                             }).ToList();
+
+                query = query.Distinct(productEqualityComparer).ToList();
+
+                foreach (var product in query)
+                {
+                    product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
+                }
+
+                var query1 = (from menu in restaurantEntities.Menu
+                              join menu_product in restaurantEntities.Menu_Product
+                              on menu.MenuID equals menu_product.MenuID
+                              join product in restaurantEntities.Product
+                              on menu_product.ProductID equals product.ProductID
+                              join product_allergen in restaurantEntities.Product_Allergen
+                              on product.ProductID equals product_allergen.ProductID
+                              join allergen in restaurantEntities.Allergen
+                              on product_allergen.AllergenID equals allergen.AllergenID
+                              where !allergen.Name.Contains(allergenName)
+                              select new ProductsDisplay
+                              {
+                                  Name = menu.Name,
+                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                              where menu.MenuID.Equals(menu_product.MenuID)
+                                              select menu_product.Quantity).Sum().ToString(),
+                                  Price = (from product in restaurantEntities.Product
+                                           join menu_product in restaurantEntities.Menu_Product
+                                           on product.ProductID equals menu_product.ProductID
+                                           where menu.MenuID.Equals(menu_product.MenuID)
+                                           select product.Price).Sum().ToString(),
+                                  CategoryName = menu.Category.Name,
+                                  Image1 = menu.Image1,
+                                  Image2 = menu.Image2,
+                                  Image3 = menu.Image3,
+                                  ProductType = ProductTypeEnum.Menu
+                              }).ToList();
+
+                foreach (var product in query1)
+                {
+                    product.Allergens = restaurantEntities.GetAllergensByMenu(product.Name).ToList();
+                    var list = restaurantEntities.GetProductsByMenu(product.Name).ToList();
+                    product.Products = new List<Product>();
+                    foreach (var product1 in list)
+                    {
+                        product.Products.Add(new Product()
+                        {
+                            ProductID = product1.ProductID,
+                            Name = product1.Name,
+                            Quantity = (int)product1.Quantity,
+                            Price = product1.Price
+                        });
+                    }
+                }
+
+                query1 = query1.Distinct(productEqualityComparer).ToList();
+
+                query.AddRange(query1);
+                return query;
+            }
         }
 
         public List<ProductsDisplay> GetProductsByCategory(string category)
@@ -158,6 +328,7 @@ namespace Restaurant.Models.BusinessLogicLayer
                          }
                          )?.ToList();
             productsDisplays.AddRange(query);
+
 
             var query1 = restaurantEntities.GetAllMenusWithPriceByCategory(category).ToList();
             foreach (var menu in query1)

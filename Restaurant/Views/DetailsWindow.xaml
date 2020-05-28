@@ -44,30 +44,30 @@
 
         <Image HorizontalAlignment="Right" Height="150" Margin="0,10,50,0" VerticalAlignment="Top" Width="200" Source="{Binding Image3}" Stretch="Uniform"/>
 
-        
-        <Label Content="NAME:" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
-        <Label Content="{Binding ProductName}" HorizontalAlignment="Left" Margin="300,200,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
+        <Label Content="NAME:" HorizontalAlignment="Left" Margin="100,177,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
-        <Label Content="QUANTITY:" HorizontalAlignment="Left" Margin="100,260,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
+        <Label Content="{Binding ProductName}" HorizontalAlignment="Left" Margin="300,177,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
-        <Label Content="{Binding ProductQuantity}" HorizontalAlignment="Left" Margin="300,260,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
+        <Label Content="QUANTITY:" HorizontalAlignment="Left" Margin="100,237,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
-        <Label Content="PRICE:" HorizontalAlignment="Left" Margin="100,230,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" BorderBrush="Black"/>
+        <Label Content="{Binding ProductQuantity}" HorizontalAlignment="Left" Margin="300,237,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
-        <Label Content="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="300,230,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
+        <Label Content="PRICE:" HorizontalAlignment="Left" Margin="100,207,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" BorderBrush="Black"/>
 
-        <Label Content="ALLERGENS:" HorizontalAlignment="Left" Margin="100,300,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" BorderBrush="Black"/>
+        <Label Content="{Binding ProductPrice}" HorizontalAlignment="Left" Margin="300,207,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
-        <ListView HorizontalAlignment="Left" Height="80" Margin="300,310,0,0" VerticalAlignment="Top" Width="444" Background="Transparent" ItemsSource="{Binding Allergens}" FontFamily="Segoe UI Black" FontSize="20" HorizontalContentAlignment="Left" BorderBrush="Transparent" BorderThickness="0"/>
+        <Label Content="ALLERGENS:" HorizontalAlignment="Left" Margin="100,277,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" BorderBrush="Black"/>
+
+        <ListView HorizontalAlignment="Left" Height="102" Margin="300,287,0,0" VerticalAlignment="Top" Width="444" Background="Transparent" ItemsSource="{Binding Allergens}" FontFamily="Segoe UI Black" FontSize="20" HorizontalContentAlignment="Left" BorderBrush="Transparent" BorderThickness="0"/>
 
         <Label Content="{Binding ProductsLabel}" HorizontalAlignment="Left" Margin="100,430,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" BorderBrush="Black"/>
 
         <ListView HorizontalAlignment="Left" Height="100" Margin="300,430,0,0" VerticalAlignment="Top" Width="444" Background="Transparent" FontFamily="Segoe UI Black" FontSize="20" HorizontalContentAlignment="Left" BorderBrush="Transparent" BorderThickness="0" ItemsSource="{Binding Products}" ItemTemplateSelector="{StaticResource Selector}"/>
 
-        <Label Content="g" HorizontalAlignment="Left" Margin="506,389,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" />
-        
-        <Label Content="$" HorizontalAlignment="Left" Margin="607,389,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" />
+        <Label Content="{Binding Gramms}" HorizontalAlignment="Left" Margin="506,389,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20" />
+
+        <Label Content="{Binding Dollars}" HorizontalAlignment="Left" Margin="607,389,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
     </Grid>
 

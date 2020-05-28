@@ -39,5 +39,11 @@ namespace Restaurant.Views
             App.Current.MainWindow = signUpWindow;
             App.Current.MainWindow.Show();
         }
+
+        private void SearchClick(object sender, RoutedEventArgs e)
+        {
+            SearchWindow searchWindow = new SearchWindow();
+            searchWindow.ShowDialog();
+        }
     }
 }

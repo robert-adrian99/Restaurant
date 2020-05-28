@@ -76,18 +76,25 @@ namespace Restaurant.ViewModels
         public void SignIn(object param)
         {
             string password = (param as PasswordBox).Password;
-            UserBLL user = new UserBLL();
-            try
+            if (password.Length == 0)
             {
-                user.SignIn(Email, password);
-                MenuWindow menuWindow = new MenuWindow();
-                App.Current.MainWindow.Close();
-                App.Current.MainWindow = menuWindow;
-                App.Current.MainWindow.Show();
+                MessageBox.Show("Enter your password");
             }
-            catch
+            else
             {
-                MessageBox.Show("Incorrect email or password!");
+                UserBLL user = new UserBLL();
+                try
+                {
+                    user.SignIn(Email, password);
+                    MenuWindow menuWindow = new MenuWindow();
+                    App.Current.MainWindow.Close();
+                    App.Current.MainWindow = menuWindow;
+                    App.Current.MainWindow.Show();
+                }
+                catch
+                {
+                    MessageBox.Show("Incorrect email or password!");
+                }
             }
         }
         #endregion

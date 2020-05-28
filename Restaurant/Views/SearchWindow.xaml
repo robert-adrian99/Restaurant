@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         Title="Steak House" Height="700" Width="1000" Icon="/Restaurant;component/Assets/Icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
-    <!--<Window.DataContext>
-        <ctx:MenuViewModel/>
-    </Window.DataContext>-->
+    <Window.DataContext>
+        <ctx:SearchViewModel/>
+    </Window.DataContext>
 
     <Window.Resources>
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
@@ -35,8 +35,8 @@
         <help:TemplateSelector x:Key="Selector"/>
         <DataTemplate x:Key="ListTemplate">
             <StackPanel Orientation="Horizontal" Background="Transparent">
-                <TextBlock Text="{Binding Category}" HorizontalAlignment="Left" Width="300"/>
-                <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" Width="200"/>
+                <TextBlock Text="{Binding CategoryName}" HorizontalAlignment="Left" Width="250"/>
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" Width="350"/>
                 <TextBlock Text="{Binding Quantity}" Width="200"/>
                 <TextBlock Text="{Binding Price}"/>
             </StackPanel>
@@ -50,18 +50,22 @@
         </Button>
 
 
-        <ComboBox Margin="50,167,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Height="50" FontFamily="Segoe UI Black" FontSize="20" Background="#FF5A3F32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedItemCombobox}">
+        <ComboBox Margin="50,167,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Height="50" FontFamily="Segoe UI Black" FontSize="20" Background="#FF5A3F32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding SelectedProductAllergen}">
+            <ComboBoxItem Content="ALLERGEN" IsSelected="True"/>
+            <ComboBoxItem Content="PRODUCT"/>
         </ComboBox>
 
-        <ComboBox Margin="360,167,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Height="50" FontFamily="Segoe UI Black" FontSize="20" Background="#FF5A3F32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedItemCombobox}">
+        <ComboBox Margin="360,167,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Height="50" FontFamily="Segoe UI Black" FontSize="20" Background="#FF5A3F32" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding SelectedContaining}">
+            <ComboBoxItem Content="CONTAINS" IsSelected="True"/>
+            <ComboBoxItem Content="DON'T CONTAINS"/>
         </ComboBox>
 
-        <TextBox HorizontalAlignment="Right" Height="50" Margin="0,167,44,0" MaxLength="50" VerticalAlignment="Top" Width="256" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <TextBox HorizontalAlignment="Right" Height="50" Margin="0,167,44,0" MaxLength="50" VerticalAlignment="Top" Width="256" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="Black" BorderThickness="1" Text="{Binding SearchBar}"/>
 
 
         <Label Content="CATEGORY" FontFamily="Segoe UI Black" FontSize="20" Margin="50,222,744,409" Width="200" Height="40"/>
 
-        <Label Content="PRODUCT NAME" FontFamily="Segoe UI Black" FontSize="20" Margin="268,222,526,409" Width="200" Height="40"/>
+        <Label Content="PRODUCT NAME" FontFamily="Segoe UI Black" FontSize="20" Margin="300,222,526,409" Width="200" Height="40"/>
 
         <Label Content="QUANTITY (G)" FontFamily="Segoe UI Black" FontSize="20" Margin="593,222,240,409" Height="40"/>
 
@@ -71,7 +75,7 @@
 
         <Button Style="{StaticResource RoundedButtonStyle}" Content="DETAILS ABOUT PRODUCT" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding SeeDetailsCommand}"/>
 
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEARCH" HorizontalAlignment="Right" Margin="0,50,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Click="SearchClick"/>
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEARCH" HorizontalAlignment="Right" Margin="0,50,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding SearchCommand}"/>
 
     </Grid>
 </Window>
