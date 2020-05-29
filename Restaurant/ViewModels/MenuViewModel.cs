@@ -19,6 +19,7 @@ namespace Restaurant.ViewModels
     {
         private CategoryBLL categoryBLL = new CategoryBLL();
         private MealBLL mealBLL = new MealBLL();
+        private List<ProductsDisplay> shoppingList = new List<ProductsDisplay>();
 
         public MenuViewModel()
         {
@@ -31,7 +32,7 @@ namespace Restaurant.ViewModels
             }
             SelectedItemCombobox = Categories.First();
 
-            ProductsDisplay = new ObservableCollection<ProductsDisplay>(mealBLL.GetProductsByCategory(SelectedItemCombobox));
+            ProductsDisplays = new ObservableCollection<ProductsDisplay>(mealBLL.GetProductsByCategory(SelectedItemCombobox));
         }
 
         #region DataMembers
@@ -49,21 +50,21 @@ namespace Restaurant.ViewModels
                 selectedItemCombobox = value;
                 CanExecuteCommand = false;
                 NotifyPropertyChanged("SelectedItemCombobox");
-                ProductsDisplay = new ObservableCollection<ProductsDisplay>(mealBLL.GetProductsByCategory(SelectedItemCombobox));
+                ProductsDisplays = new ObservableCollection<ProductsDisplay>(mealBLL.GetProductsByCategory(SelectedItemCombobox));
             }
         }
 
-        private ObservableCollection<ProductsDisplay> productsDisplay;
-        public ObservableCollection<ProductsDisplay> ProductsDisplay
+        private ObservableCollection<ProductsDisplay> productsDisplays;
+        public ObservableCollection<ProductsDisplay> ProductsDisplays
         {
             get
             {
-                return productsDisplay;
+                return productsDisplays;
             }
             set
             {
-                productsDisplay = value;
-                NotifyPropertyChanged("ProductsDisplay");
+                productsDisplays = value;
+                NotifyPropertyChanged("ProductsDisplays");
             }
         }
 
@@ -111,6 +112,53 @@ namespace Restaurant.ViewModels
                 detailsWindow.DataContext = detailsViewModel;
                 detailsWindow.ShowDialog();
             }
+        }
+
+        private ICommand addToCartCommand;
+        public ICommand AddToCartCommand
+        {
+            get
+            {
+                if (addToCartCommand == null)
+                {
+                    addToCartCommand = new RelayCommand(AddToCart, param => CanExecuteCommand);
+                }
+                return addToCartCommand;
+            }
+        }
+
+        public void AddToCart(object param)
+        {
+            if (SelectedItemList == null)
+            {
+                MessageBox.Show("Select a product");
+            }
+            else
+            {
+                shoppingList.Add(SelectedItemList);
+                MessageBox.Show("The product has been added to your cart");
+            }
+        }
+
+        private ICommand seeCartCommand;
+        public ICommand SeeCartCommand
+        {
+            get
+            {
+                if (seeCartCommand == null)
+                {
+                    seeCartCommand = new RelayCommand(SeeCart);
+                }
+                return seeCartCommand;
+            }
+        }
+
+        public void SeeCart(object param)
+        {
+            SeeCartWindow seeCartWindow = new SeeCartWindow();
+            SeeCartViewModel seeCartViewModel = new SeeCartViewModel(shoppingList);
+            seeCartWindow.DataContext = seeCartViewModel;
+            seeCartWindow.ShowDialog();
         }
         #endregion
     }

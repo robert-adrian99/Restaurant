@@ -87,7 +87,7 @@ namespace Restaurant.ViewModels
             {
                 if (SelectedProductAllergen.Contains("PRODUCT"))
                 {
-                    if (SelectedContaining.Contains("DON'T"))
+                    if (SelectedContaining.Contains("DOESN'T"))
                     {
                         ProductsDisplay = new ObservableCollection<ProductsDisplay>(meal.GetProductsContainingInName(SearchBar, false));
                     }
@@ -98,7 +98,7 @@ namespace Restaurant.ViewModels
                 }
                 else
                 {
-                    if (SelectedContaining.Contains("DON'T"))
+                    if (SelectedContaining.Contains("DOESN'T"))
                     {
                         ProductsDisplay = new ObservableCollection<ProductsDisplay>(meal.GetProductsContainingAllergen(SearchBar, false));
                     }

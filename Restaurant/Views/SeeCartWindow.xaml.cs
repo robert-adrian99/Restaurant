@@ -15,21 +15,18 @@ using System.Windows.Shapes;
 namespace Restaurant.Views
 {
     /// <summary>
-    /// Interaction logic for UserOrdersWindow.xaml
+    /// Interaction logic for SeeCartWindow.xaml
     /// </summary>
-    public partial class UserOrdersWindow : Window
+    public partial class SeeCartWindow : Window
     {
-        public UserOrdersWindow()
+        public SeeCartWindow()
         {
             InitializeComponent();
         }
 
         private void BackClick(object sender, RoutedEventArgs e)
         {
-            MenuWindow menuWindow = new MenuWindow();
-            App.Current.MainWindow.Close();
-            App.Current.MainWindow = menuWindow;
-            App.Current.MainWindow.Show();
+            this.Close();
         }
     }
 }

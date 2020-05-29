@@ -238,11 +238,6 @@ namespace Restaurant.Models.BusinessLogicLayer
             else
             {
                 var query = (from product in restaurantEntities.Product
-                             join product_allergen in restaurantEntities.Product_Allergen
-                             on product.ProductID equals product_allergen.AllergenID
-                             join allergen in restaurantEntities.Allergen
-                             on product_allergen.AllergenID equals allergen.AllergenID
-                             where !allergen.Name.Contains(allergenName)
                              select new ProductsDisplay
                              {
                                  Name = product.Name,
@@ -257,21 +252,26 @@ namespace Restaurant.Models.BusinessLogicLayer
 
                 query = query.Distinct(productEqualityComparer).ToList();
 
+                List<ProductsDisplay> products = new List<ProductsDisplay>();
                 foreach (var product in query)
                 {
                     product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
+                    bool ok = true;
+                    foreach(var allergen in product.Allergens)
+                    {
+                        if (allergen.ToLower().Contains(allergenName.ToLower()))
+                        {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (ok)
+                    {
+                        products.Add(product);
+                    }
                 }
 
                 var query1 = (from menu in restaurantEntities.Menu
-                              join menu_product in restaurantEntities.Menu_Product
-                              on menu.MenuID equals menu_product.MenuID
-                              join product in restaurantEntities.Product
-                              on menu_product.ProductID equals product.ProductID
-                              join product_allergen in restaurantEntities.Product_Allergen
-                              on product.ProductID equals product_allergen.ProductID
-                              join allergen in restaurantEntities.Allergen
-                              on product_allergen.AllergenID equals allergen.AllergenID
-                              where !allergen.Name.Contains(allergenName)
                               select new ProductsDisplay
                               {
                                   Name = menu.Name,
@@ -290,14 +290,17 @@ namespace Restaurant.Models.BusinessLogicLayer
                                   ProductType = ProductTypeEnum.Menu
                               }).ToList();
 
-                foreach (var product in query1)
+                query1 = query1.Distinct(productEqualityComparer).ToList();
+
+                List<ProductsDisplay> menus = new List<ProductsDisplay>();
+                foreach (var menu in query1)
                 {
-                    product.Allergens = restaurantEntities.GetAllergensByMenu(product.Name).ToList();
-                    var list = restaurantEntities.GetProductsByMenu(product.Name).ToList();
-                    product.Products = new List<Product>();
+                    menu.Allergens = restaurantEntities.GetAllergensByMenu(menu.Name).ToList();
+                    var list = restaurantEntities.GetProductsByMenu(menu.Name).ToList();
+                    menu.Products = new List<Product>();
                     foreach (var product1 in list)
                     {
-                        product.Products.Add(new Product()
+                        menu.Products.Add(new Product()
                         {
                             ProductID = product1.ProductID,
                             Name = product1.Name,
@@ -305,12 +308,23 @@ namespace Restaurant.Models.BusinessLogicLayer
                             Price = product1.Price
                         });
                     }
+                    bool ok = true;
+                    foreach (var allergen in menu.Allergens)
+                    {
+                        if (allergen.ToLower().Contains(allergenName.ToLower()))
+                        {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if (ok)
+                    {
+                        menus.Add(menu);
+                    }
                 }
 
-                query1 = query1.Distinct(productEqualityComparer).ToList();
-
-                query.AddRange(query1);
-                return query;
+                products.AddRange(menus);
+                return products;
             }
         }
 
