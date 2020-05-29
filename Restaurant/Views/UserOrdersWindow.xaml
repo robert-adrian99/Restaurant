@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restaurant.Views"
         xmlns:ctx="clr-namespace:Restaurant.ViewModels"
+        xmlns:help="clr-namespace:Restaurant.Helps"
         mc:Ignorable="d"
         Title="Steak House" Height="700" Width="1000" Icon="/Restaurant;component/Assets/Icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
-        <ctx:MenuViewModel/>
+        <ctx:UserOrdersViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
@@ -31,12 +32,18 @@
             </Style.Triggers>
         </Style>
 
-        <!--<local:StudentDataTemplateSelector x:Key="studentDataTemplateSelector"/>-->
-        <DataTemplate x:Key="template1">
-            <StackPanel Orientation="Horizontal" Background="LightGray">
-                <Image Source="{Binding ProductImage}"/>
-                <TextBlock Text="{Binding ProductName}"/>
-                <TextBlock Text="{Binding Quantity}"/>
+        <help:TemplateSelector x:Key="Selector"/>
+        <DataTemplate x:Key="ListTemplate">
+            <StackPanel Orientation="Horizontal" Background="Transparent">
+                <TextBlock Text="{Binding OrderNumber}"/>
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock Text="{Binding Date}"/>
+                    <TextBlock Text="{Binding EstimatedDate}" Width="250"/>
+                </StackPanel>
+                <StackPanel Margin="20,0,0,0">
+                    <TextBlock Text="{Binding Status}" Width="100"/>
+                    <TextBlock Text="{Binding Price}"/>
+                </StackPanel>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -47,14 +54,27 @@
             <Image  Source="/Restaurant;component/Assets/SteakHouse.png"/>
         </Button>
 
-        <ListBox HorizontalAlignment="Left" VerticalAlignment="Top" Height="420" Width="435" Margin="50,175,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" SelectedItem="{Binding SelectedUser}" ItemsSource="{Binding Users}"/>
-        <!--ItemTemplateSelector="{StaticResource studentDataTemplateSelector}"-->
+        <Label Content="ACTIVE ORDERS" HorizontalAlignment="Left" Margin="50,70,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="CANCEL ORDER" HorizontalAlignment="Left" Margin="120,0,0,10" VerticalAlignment="Bottom" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20"/>
+        <Label Content="NUMBER" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Left" Margin="20,200,0,0" VerticalAlignment="Top"/>
 
-        <ListBox HorizontalAlignment="Right" Height="475" VerticalAlignment="Top" Width="435" Margin="0,175,50,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" SelectedItem="{Binding SelectedUser}" ItemsSource="{Binding Users}"/>
-        <Label Content="ACTIVE ORDERS" HorizontalAlignment="Left" Margin="50,133,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
-        <Label Content="ALL ORDERS" HorizontalAlignment="Right" Margin="0,133,50,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
+        <Label Content="ORDER DATE&#xa;ESTIMATED DATE" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Left" Margin="150,170,0,0"  VerticalAlignment="Top"/>
+
+        <Label Content="STATUS&#xa;Price ($)" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Left" Margin="380,170,0,0"  VerticalAlignment="Top"/>
+        
+        <ListBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="350" Width="465" Margin="20,0,0,80" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" SelectedItem="{Binding SelectedActiveOrder}" ItemsSource="{Binding ActiveOrders}" ItemTemplateSelector="{StaticResource Selector}"/>
+
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="CANCEL ORDER" HorizontalAlignment="Left" Margin="120,0,0,10" VerticalAlignment="Bottom" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding CancelCommand}"/>
+
+        <Label Content="ALL ORDERS" HorizontalAlignment="Right" Margin="0,70,50,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
+
+        <Label Content="NUMBER" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Right" Margin="0,200,380,0" VerticalAlignment="Top"/>
+
+        <Label Content="ORDER DATE&#xa;ESTIMATED DATE" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Right" Margin="0,170,160,0"  VerticalAlignment="Top"/>
+
+        <Label Content="STATUS&#xa;Price ($)" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Right" Margin="0,170,30,0"  VerticalAlignment="Top"/>
+
+        <ListBox HorizontalAlignment="Right" Height="409" VerticalAlignment="Bottom" Width="465" Margin="0,0,20,20" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" SelectedItem="{Binding SelectedAllOrder}" ItemsSource="{Binding AllOrders}" ItemTemplateSelector="{StaticResource Selector}"/>
 
     </Grid>
 </Window>

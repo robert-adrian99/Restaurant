@@ -87,6 +87,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\OrdersDisplay.cs" />
     <Compile Include="Models\Entity\ProductsDisplay.cs" />
     <Compile Include="Models\Entity\ProductsInCart.cs" />
     <Compile Include="Models\GetActiveOrdersByUser_Result.cs">
@@ -165,7 +166,7 @@
     <Compile Include="ViewModels\SeeCartViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\SignUpViewModel.cs" />
-    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\UserOrdersViewModel.cs" />
     <Compile Include="Views\DetailsWindow.xaml.cs">
       <DependentUpon>DetailsWindow.xaml</DependentUpon>
     </Compile>

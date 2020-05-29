@@ -11,17 +11,21 @@ namespace Restaurant.Models.BusinessLogicLayer
     class OrderBLL
     {
         private RestaurantEntities restaurantEntities = new RestaurantEntities();
+        private User activeUser = new User();
+
+        public OrderBLL()
+        {
+            activeUser = (from user in restaurantEntities.User
+                          where user.Active
+                          select user).First();
+        }
 
         public void AddOrder(double price, List<ProductsInCart> productsInCart)
         {
-            var userQuery = (from user in restaurantEntities.User
-                         where user.Active.Equals(true)
-                         select user).First();
-
             Order newOrder = new Order()
             {
                 OrderNumber = Properties.Settings.Default.OrderNumber++,
-                UserID = userQuery.UserID,
+                UserID = activeUser.UserID,
                 Status = OrderStatus.Registerd.ToString(),
                 Date = DateTime.Now,
                 Price = price
@@ -63,6 +67,44 @@ namespace Restaurant.Models.BusinessLogicLayer
             restaurantEntities.SaveChanges();
         }
 
+        public List<OrdersDisplay> GetActiveOrders()
+        {
+            var activeOrders = (from order in restaurantEntities.Order
+                                where !order.Status.Equals(OrderStatus.Canceled.ToString())
+                                && !order.Status.Equals(OrderStatus.Delivered.ToString())
+                                && order.UserID.Equals(activeUser.UserID)
+                                select new OrdersDisplay
+                                {
+                                    OrderNumber = order.OrderNumber,
+                                    Price = order.Price,
+                                    Date = order.Date,
+                                    Status = order.Status
+                                }).ToList();
 
+            foreach (var order in activeOrders)
+            {
+                order.EstimatedDate = order.Date.AddMinutes(Constants.DeliveryTime);
+            }
+            return activeOrders;
+        }
+
+        public List<OrdersDisplay> GetAllOrders()
+        {
+            var allOrders = (from order in restaurantEntities.Order
+                             where order.UserID.Equals(activeUser.UserID)
+                             select new OrdersDisplay
+                             {
+                                 OrderNumber = order.OrderNumber,
+                                 Price = order.Price,
+                                 Date = order.Date,
+                                 Status = order.Status
+                             }).ToList();
+
+            foreach (var order in allOrders)
+            {
+                order.EstimatedDate = order.Date.AddMinutes(Constants.DeliveryTime);
+            }
+            return allOrders;
+        }
     }
 }

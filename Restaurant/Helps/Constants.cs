@@ -64,5 +64,13 @@ namespace Restaurant.Helps
                 return double.Parse(ConfigurationManager.AppSettings.Get("orderPriceGreaterThanForDiscount"));
             }
         }
+
+        static public int DeliveryTime 
+        { 
+            get
+            {
+                return int.Parse(ConfigurationManager.AppSettings.Get("deliveryTime"));
+            }
+        }
     }
 }
