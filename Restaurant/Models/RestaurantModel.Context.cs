@@ -44,6 +44,15 @@ namespace Restaurant.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetActiveOrdersByUser_Result>("GetActiveOrdersByUser");
         }
     
+        public virtual ObjectResult<string> GetAllergensByMenu(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("menuName", menuName) :
+                new ObjectParameter("menuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergensByMenu", menuNameParameter);
+        }
+    
         public virtual ObjectResult<string> GetAllergensByProduct(string productName)
         {
             var productNameParameter = productName != null ?
@@ -88,6 +97,15 @@ namespace Restaurant.Models
                 new ObjectParameter("categoryName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByCategory_Result>("GetProductsByCategory", categoryNameParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsByMenu_Result> GetProductsByMenu(string menuName)
+        {
+            var menuNameParameter = menuName != null ?
+                new ObjectParameter("menuName", menuName) :
+                new ObjectParameter("menuName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByMenu_Result>("GetProductsByMenu", menuNameParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -191,24 +209,6 @@ namespace Restaurant.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
-        public virtual ObjectResult<string> GetAllergensByMenu(string menuName)
-        {
-            var menuNameParameter = menuName != null ?
-                new ObjectParameter("menuName", menuName) :
-                new ObjectParameter("menuName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetAllergensByMenu", menuNameParameter);
-        }
-    
-        public virtual ObjectResult<GetProductsByMenu_Result> GetProductsByMenu(string menuName)
-        {
-            var menuNameParameter = menuName != null ?
-                new ObjectParameter("menuName", menuName) :
-                new ObjectParameter("menuName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByMenu_Result>("GetProductsByMenu", menuNameParameter);
         }
     }
 }

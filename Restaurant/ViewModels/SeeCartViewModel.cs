@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Restaurant.Helps;
+using Restaurant.Models.BusinessLogicLayer;
 using Restaurant.Models.Entity;
 
 namespace Restaurant.ViewModels
@@ -39,7 +40,8 @@ namespace Restaurant.ViewModels
                         Name = product.Name,
                         Quantity = 1,
                         Price = product.Price,
-                        TotalPrice = product.Price
+                        TotalPrice = product.Price,
+                        ProductType = product.ProductType
                     });
 
                 }
@@ -236,7 +238,12 @@ namespace Restaurant.ViewModels
             }
             else
             {
-
+                if (MessageBox.Show("Your order worth $" + Total + " will be placed!\n\nAre you sure you want to place this order?", "Place order", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    OrderBLL orderBLL = new OrderBLL();
+                    orderBLL.AddOrder(Total, productsInCarts.ToList());
+                    MessageBox.Show("Order placed successfully");
+                }
             }
         }
         #endregion

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allergen">
           <Key>
             <PropertyRef Name="AllergenID" />
@@ -43,8 +43,8 @@
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
-          <Property Name="OrderID" Type="int" Nullable="false" />
-          <Property Name="OrderNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNumber" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Status" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
@@ -352,7 +352,8 @@
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -402,8 +403,8 @@
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
-          <Property Name="OrderID" Type="Int32" Nullable="false" />
-          <Property Name="OrderNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNumber" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
@@ -673,19 +674,25 @@
             <End Role="Product_Allergen" EntitySet="Product_Allergen" />
           </AssociationSet>
           <FunctionImport Name="GetActiveOrdersByUser" ReturnType="Collection(Models.GetActiveOrdersByUser_Result)" />
+          <FunctionImport Name="GetAllergensByMenu" ReturnType="Collection(String)">
+            <Parameter Name="menuName" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="GetAllergensByProduct" ReturnType="Collection(String)">
-          <Parameter Name="productName" Mode="In" Type="String" />
+            <Parameter Name="productName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllMenusWithPriceByCategory" ReturnType="Collection(Models.GetAllMenusWithPriceByCategory_Result)">
-          <Parameter Name="categoryName" Mode="In" Type="String" />
+            <Parameter Name="categoryName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetAllOrdersByUser" ReturnType="Collection(Models.GetAllOrdersByUser_Result)" />
           <FunctionImport Name="GetEmployees" ReturnType="Collection(Models.GetEmployees_Result)" />
           <FunctionImport Name="GetProductsByAllergen" ReturnType="Collection(Models.GetProductsByAllergen_Result)">
-          <Parameter Name="allergen" Mode="In" Type="String" />
+            <Parameter Name="allergen" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetProductsByCategory" ReturnType="Collection(Models.GetProductsByCategory_Result)">
-          <Parameter Name="categoryName" Mode="In" Type="String" />
+            <Parameter Name="categoryName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsByMenu" ReturnType="Collection(Models.GetProductsByMenu_Result)">
+            <Parameter Name="menuName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -717,12 +724,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="GetAllergensByMenu" ReturnType="Collection(String)">
-          <Parameter Name="menuName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetProductsByMenu" ReturnType="Collection(Models.GetProductsByMenu_Result)">
-            <Parameter Name="menuName" Mode="In" Type="String" />
-          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetActiveOrdersByUser_Result">
           <Property Type="Int32" Name="OrderID" Nullable="false" />
@@ -776,6 +777,12 @@
           <Property Type="Binary" Name="Image2" Nullable="true" MaxLength="Max" />
           <Property Type="Binary" Name="Image3" Nullable="true" MaxLength="Max" />
         </ComplexType>
+        <ComplexType Name="GetProductsByMenu_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="Double" Name="Price" Nullable="false" />
+          <Property Type="Double" Name="Quantity" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -786,12 +793,6 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetProductsByMenu_Result">
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
-          <Property Type="Double" Name="Price" Nullable="false" />
-          <Property Type="Double" Name="Quantity" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -928,6 +929,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllergensByMenu" FunctionName="Models.Store.GetAllergensByMenu" />
           <FunctionImportMapping FunctionImportName="GetAllergensByProduct" FunctionName="Models.Store.GetAllergensByProduct" />
           <FunctionImportMapping FunctionImportName="GetAllMenusWithPriceByCategory" FunctionName="Models.Store.GetAllMenusWithPriceByCategory">
             <ResultMapping>
@@ -993,6 +995,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsByMenu" FunctionName="Models.Store.GetProductsByMenu">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.GetProductsByMenu_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Models.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Models.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Models.Store.sp_dropdiagram" />
@@ -1017,17 +1029,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Models.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Models.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="GetAllergensByMenu" FunctionName="Models.Store.GetAllergensByMenu" />
-          <FunctionImportMapping FunctionImportName="GetProductsByMenu" FunctionName="Models.Store.GetProductsByMenu">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Models.GetProductsByMenu_Result">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

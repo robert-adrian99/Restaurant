@@ -10,6 +10,7 @@ namespace Restaurant.Models.Entity
 {
     public class ProductsInCart : NotifyPropertyChangedHelp
     {
+        public ProductTypeEnum ProductType { get; set; }
         private string name;
         public string Name
         {

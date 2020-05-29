@@ -337,7 +337,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                          {
                              Name = product.Name,
                              Quantity = product.Quantity,
-                             Price = product.Price
+                             Price = product.Price,
+                             ProductType = ProductTypeEnum.Product
                          }
                          )?.ToList();
             productsDisplays.AddRange(query);
@@ -350,7 +351,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                 {
                     Name = menu.Name,
                     Quantity = (int)(menu.Quantity ?? 0),
-                    Price = MenuPriceAfterDiscount(menu.Price ?? 0)
+                    Price = MenuPriceAfterDiscount(menu.Price ?? 0),
+                    ProductType = ProductTypeEnum.Menu
                 });
             }
 
