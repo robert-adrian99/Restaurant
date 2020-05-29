@@ -159,6 +159,16 @@ namespace Restaurant.ViewModels
             SeeCartViewModel seeCartViewModel = new SeeCartViewModel(shoppingList);
             seeCartWindow.DataContext = seeCartViewModel;
             seeCartWindow.ShowDialog();
+            shoppingList = new List<ProductsDisplay>();
+            foreach (var product in seeCartViewModel.ProductsInCarts)
+            {
+                shoppingList.Add(new ProductsDisplay()
+                {
+                    Name = product.Name,
+                    Quantity = product.Quantity,
+                    Price = product.Price
+                });
+            }
         }
         #endregion
     }

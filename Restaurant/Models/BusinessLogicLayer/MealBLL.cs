@@ -18,8 +18,7 @@ namespace Restaurant.Models.BusinessLogicLayer
 
         private double MenuPriceAfterDiscount(double price)
         {
-            double discount = double.Parse(ConfigurationManager.AppSettings.Get("menuDiscount"));
-            return price - discount / 100 * price;
+            return price - Constants.MenuDiscount / 100 * price;
         }
 
         public List<ProductsDisplay> GetProductsContainingInName(string productName, bool containing)
@@ -31,8 +30,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                              select new ProductsDisplay
                              {
                                  Name = product.Name,
-                                 Quantity = product.Quantity.ToString(),
-                                 Price = product.Price.ToString(),
+                                 Quantity = product.Quantity,
+                                 Price = product.Price,
                                  CategoryName = product.Category.Name,
                                  Image1 = product.Image1,
                                  Image2 = product.Image2,
@@ -52,14 +51,14 @@ namespace Restaurant.Models.BusinessLogicLayer
                               select new ProductsDisplay
                               {
                                   Name = menu.Name,
-                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                  Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
                                               where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum().ToString(),
+                                              select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
                                            where menu.MenuID.Equals(menu_product.MenuID)
-                                           select product.Price).Sum().ToString(),
+                                           select product.Price).Sum(),
                                   CategoryName = menu.Category.Name,
                                   Image1 = menu.Image1,
                                   Image2 = menu.Image2,
@@ -96,8 +95,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                              select new ProductsDisplay
                              {
                                  Name = product.Name,
-                                 Quantity = product.Quantity.ToString(),
-                                 Price = product.Price.ToString(),
+                                 Quantity = product.Quantity,
+                                 Price = product.Price,
                                  CategoryName = product.Category.Name,
                                  Image1 = product.Image1,
                                  Image2 = product.Image2,
@@ -117,14 +116,14 @@ namespace Restaurant.Models.BusinessLogicLayer
                               select new ProductsDisplay
                               {
                                   Name = menu.Name,
-                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                  Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
                                               where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum().ToString(),
+                                              select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
                                            where menu.MenuID.Equals(menu_product.MenuID)
-                                           select product.Price).Sum().ToString(),
+                                           select product.Price).Sum(),
                                   CategoryName = menu.Category.Name,
                                   Image1 = menu.Image1,
                                   Image2 = menu.Image2,
@@ -169,8 +168,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                              select new ProductsDisplay
                              {
                                  Name = product.Name,
-                                 Quantity = product.Quantity.ToString(),
-                                 Price = product.Price.ToString(),
+                                 Quantity = product.Quantity,
+                                 Price = product.Price,
                                  CategoryName = product.Category.Name,
                                  Image1 = product.Image1,
                                  Image2 = product.Image2,
@@ -198,14 +197,14 @@ namespace Restaurant.Models.BusinessLogicLayer
                               select new ProductsDisplay
                               {
                                   Name = menu.Name,
-                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                  Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
                                               where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum().ToString(),
+                                              select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
                                            where menu.MenuID.Equals(menu_product.MenuID)
-                                           select product.Price).Sum().ToString(),
+                                           select product.Price).Sum(),
                                   CategoryName = menu.Category.Name,
                                   Image1 = menu.Image1,
                                   Image2 = menu.Image2,
@@ -241,8 +240,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                              select new ProductsDisplay
                              {
                                  Name = product.Name,
-                                 Quantity = product.Quantity.ToString(),
-                                 Price = product.Price.ToString(),
+                                 Quantity = product.Quantity,
+                                 Price = product.Price,
                                  CategoryName = product.Category.Name,
                                  Image1 = product.Image1,
                                  Image2 = product.Image2,
@@ -275,14 +274,14 @@ namespace Restaurant.Models.BusinessLogicLayer
                               select new ProductsDisplay
                               {
                                   Name = menu.Name,
-                                  Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                  Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
                                               where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum().ToString(),
+                                              select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
                                            where menu.MenuID.Equals(menu_product.MenuID)
-                                           select product.Price).Sum().ToString(),
+                                           select product.Price).Sum(),
                                   CategoryName = menu.Category.Name,
                                   Image1 = menu.Image1,
                                   Image2 = menu.Image2,
@@ -337,8 +336,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                          select new ProductsDisplay
                          {
                              Name = product.Name,
-                             Quantity = product.Quantity.ToString(),
-                             Price = product.Price.ToString()
+                             Quantity = product.Quantity,
+                             Price = product.Price
                          }
                          )?.ToList();
             productsDisplays.AddRange(query);
@@ -350,8 +349,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                 productsDisplays.Add(new ProductsDisplay()
                 {
                     Name = menu.Name,
-                    Quantity = (menu.Quantity ?? 0).ToString(),
-                    Price = MenuPriceAfterDiscount(menu.Price ?? 0).ToString()
+                    Quantity = (int)(menu.Quantity ?? 0),
+                    Price = MenuPriceAfterDiscount(menu.Price ?? 0)
                 });
             }
 
@@ -367,8 +366,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                              select new ProductsDisplay
                              {
                                  Name = product.Name,
-                                 Quantity = product.Quantity.ToString(),
-                                 Price = product.Price.ToString(),
+                                 Quantity = product.Quantity,
+                                 Price = product.Price,
                                  CategoryName = product.Category.Name,
                                  Image1 = product.Image1,
                                  Image2 = product.Image2,
@@ -386,14 +385,14 @@ namespace Restaurant.Models.BusinessLogicLayer
                              select new ProductsDisplay
                              {
                                  Name = menu.Name,
-                                 Quantity = (from menu_product in restaurantEntities.Menu_Product
+                                 Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
                                              where menu.MenuID.Equals(menu_product.MenuID)
-                                             select menu_product.Quantity).Sum().ToString(),
+                                             select menu_product.Quantity).Sum(),
                                  Price = (from product in restaurantEntities.Product
                                           join menu_product in restaurantEntities.Menu_Product
                                           on product.ProductID equals menu_product.ProductID
                                           where menu.MenuID.Equals(menu_product.MenuID)
-                                          select product.Price).Sum().ToString(),
+                                          select product.Price).Sum(),
                                  CategoryName = menu.Category.Name,
                                  Image1 = menu.Image1,
                                  Image2 = menu.Image2,

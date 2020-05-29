@@ -36,7 +36,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                return productsDisplay.Quantity.ToUpper() + " g";
+                return productsDisplay.Quantity + " g";
             }
         }
 
@@ -44,7 +44,7 @@ namespace Restaurant.ViewModels
         {
             get
             {
-                return productsDisplay.Price.ToUpper() + " $";
+                return productsDisplay.Price + " $";
             }
         }
 

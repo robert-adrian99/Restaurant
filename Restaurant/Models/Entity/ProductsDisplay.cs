@@ -17,8 +17,8 @@ namespace Restaurant.Models.Entity
         public ProductTypeEnum ProductType { get; set; }
         public string Name { get; set; }
         public string CategoryName { get; set; }
-        public string Quantity { get; set; }
-        public string Price { get; set; }
+        public int Quantity { get; set; }
+        public double Price { get; set; }
         public byte[] Image1 { get; set; }
         public byte[] Image2 { get; set; }
         public byte[] Image3 { get; set; }

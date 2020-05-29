@@ -31,9 +31,10 @@
         <help:TemplateSelector x:Key="Selector"/>
         <DataTemplate x:Key="ListTemplate">
             <StackPanel Orientation="Horizontal" Background="Transparent">
-                <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" Width="400"/>
-                <TextBlock Text="{Binding Quantity}" Width="350"/>
-                <TextBlock Text="{Binding Price}"/>
+                <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" Width="300"/>
+                <TextBlock Text="{Binding Quantity}" Width="250"/>
+                <TextBlock Text="{Binding Price}" Width="250"/>
+                <TextBlock Text="{Binding TotalPrice}"/>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -46,13 +47,33 @@
 
         <Label Content="Product Name" FontFamily="Segoe UI Black" FontSize="20" Margin="50,171,744,460" Width="200" Height="40"/>
 
-        <Label Content="Quantity (pieces)" FontFamily="Segoe UI Black" FontSize="20" Margin="449,171,352,460" Height="40"/>
+        <Label Content="Quantity (pieces)" FontFamily="Segoe UI Black" FontSize="20" Margin="320,171,480,460" Height="40"/>
 
-        <Label Content="Price ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="792,171,82,460" Height="40" Width="120"/>
+        <Label Content="Price/Piece ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="580,171,246,460" Height="40"/>
 
-        <ListBox HorizontalAlignment="Left" Height="270" VerticalAlignment="Top" Width="900" Margin="50,216,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding ProductsInCarts}" ItemTemplateSelector="{StaticResource Selector}"/>
+        <Label Content="Price ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="830,171,44,460" Height="40"/>
+        
+        <ListBox HorizontalAlignment="Left" Height="270" VerticalAlignment="Top" Width="900" Margin="50,216,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding ProductsInCarts}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItem}"/>
 
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="PLACE ORDER" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="300" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20"/>
+        <Label Content="Subtotal ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="639,495,214,136" Height="40" HorizontalContentAlignment="Right"/>
+
+        <Label Content="{Binding Subtotal}" FontFamily="Segoe UI Black" FontSize="20" Margin="792,495,44,136" Height="40" HorizontalContentAlignment="Left"/>
+
+        <Label Content="Delivery Cost ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="594,535,214,96" Height="40" HorizontalContentAlignment="Right"/>
+
+        <Label Content="{Binding DeliveryCost}" FontFamily="Segoe UI Black" FontSize="20" Margin="792,535,44,96" Height="40" HorizontalContentAlignment="Left"/>
+
+        <Label Content="Discount ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="639,575,214,56" Height="40" HorizontalContentAlignment="Right"/>
+
+        <Label Content="{Binding Discount}" FontFamily="Segoe UI Black" FontSize="20" Margin="792,575,44,56" Height="40" HorizontalContentAlignment="Left"/>
+
+        <Label Content="Total ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="639,615,214,16" Height="40" HorizontalContentAlignment="Right"/>
+
+        <Label Content="{Binding Total}" FontFamily="Segoe UI Black" FontSize="20" Margin="792,615,44,16" Height="40" HorizontalContentAlignment="Left"/>
+
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="DELETE ITEM" HorizontalAlignment="Left" Margin="150,0,0,100" VerticalAlignment="Bottom" Width="300" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding DeleteItemCommand}"/>
+
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="PLACE ORDER" HorizontalAlignment="Left" Margin="150,0,0,30" VerticalAlignment="Bottom" Width="300" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding PlaceOrderCommand}"/>
 
     </Grid>
 </Window>
