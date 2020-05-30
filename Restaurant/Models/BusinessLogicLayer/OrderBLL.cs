@@ -88,7 +88,7 @@ namespace Restaurant.Models.BusinessLogicLayer
             return activeOrders;
         }
 
-        public List<OrdersDisplay> GetAllOrders()
+        public List<OrdersDisplay> GetAllDeliveredOrCanceledOrders()
         {
             List<OrdersDisplay> orders = new List<OrdersDisplay>();
 
@@ -115,6 +115,30 @@ namespace Restaurant.Models.BusinessLogicLayer
                 order.EstimatedDate = order.Date.AddMinutes(Constants.DeliveryTime);
             }
             return orders;
+        }
+
+        public List<OrdersDisplay> GetAllOrdersInTimeInterval()
+        {
+            DateTime dateTime = DateTime.Now;
+            DateTime newDate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day - Constants.DiscountTime, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+
+            var allOrders = (from order in restaurantEntities.Order
+                             where order.UserID.Equals(activeUser.UserID)
+                             && order.Date > newDate
+                             select new OrdersDisplay
+                             {
+                                 OrderNumber = order.OrderNumber,
+                                 Price = order.Price,
+                                 Date = order.Date,
+                                 Status = order.Status
+                             }).ToList();
+
+            foreach (var order in allOrders)
+            {
+                order.EstimatedDate = order.Date.AddMinutes(Constants.DeliveryTime);
+            }
+
+            return allOrders;
         }
 
         public void CancelOrder(OrdersDisplay activeOrder)

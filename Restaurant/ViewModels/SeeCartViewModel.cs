@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Restaurant.Helps;
+using Restaurant.Models;
 using Restaurant.Models.BusinessLogicLayer;
 using Restaurant.Models.Entity;
 
@@ -58,6 +59,14 @@ namespace Restaurant.ViewModels
             if (Subtotal > Constants.OrderPriceGreaterThanForDiscount)
             {
                 Discount = Math.Round(Constants.OrderDiscount / 100 * Subtotal, 2);
+            }
+            else
+            {
+                OrderBLL order = new OrderBLL();
+                if (order.GetAllOrdersInTimeInterval().Count > Constants.NumberMinOrders)
+                {
+                    Discount = Math.Round(Constants.OrderDiscount / 100 * Subtotal, 2);
+                }
             }
 
             if (Subtotal < Constants.OrderPriceGreaterThanForDelivery)

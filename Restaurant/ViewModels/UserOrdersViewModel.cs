@@ -19,7 +19,7 @@ namespace Restaurant.ViewModels
         public UserOrdersViewModel()
         {
             ActiveOrders = new ObservableCollection<OrdersDisplay>(order.GetActiveOrders());
-            AllOrders = new ObservableCollection<OrdersDisplay>(order.GetAllOrders());
+            AllOrders = new ObservableCollection<OrdersDisplay>(order.GetAllDeliveredOrCanceledOrders());
         }
 
         #region DataMembers

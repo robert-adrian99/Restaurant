@@ -33,11 +33,11 @@ namespace Restaurant.Helps
             }
         }
 
-        static public double DiscountTime
+        static public int DiscountTime
         {
             get
             {
-                return double.Parse(ConfigurationManager.AppSettings.Get("discountTime"));
+                return int.Parse(ConfigurationManager.AppSettings.Get("discountTime"));
             }
         }
 
