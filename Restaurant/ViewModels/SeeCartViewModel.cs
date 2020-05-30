@@ -250,8 +250,14 @@ namespace Restaurant.ViewModels
                 if (MessageBox.Show("Your order worth $" + Total + " will be placed!\n\nAre you sure you want to place this order?", "Place order", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     OrderBLL orderBLL = new OrderBLL();
-                    orderBLL.AddOrder(Total, productsInCarts.ToList());
-                    MessageBox.Show("Order placed successfully");
+                    if (orderBLL.AddOrder(Total, productsInCarts.ToList()))
+                    {
+                        MessageBox.Show("Order placed successfully");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Not enough quantity in store!");
+                    }
                 }
             }
         }

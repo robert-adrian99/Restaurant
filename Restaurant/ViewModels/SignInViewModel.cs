@@ -86,10 +86,21 @@ namespace Restaurant.ViewModels
                 try
                 {
                     user.SignIn(Email, password);
-                    MenuWindow menuWindow = new MenuWindow();
-                    App.Current.MainWindow.Close();
-                    App.Current.MainWindow = menuWindow;
-                    App.Current.MainWindow.Show();
+                    Regex regex = new Regex(@"@steak-house.com$|@steakhouse.com$");
+                    if (regex.Match(Email) != Match.Empty)
+                    {
+                        EmployeeStartWindow employeeStartWindow = new EmployeeStartWindow();
+                        App.Current.MainWindow.Close();
+                        App.Current.MainWindow = employeeStartWindow;
+                        App.Current.MainWindow.Show();
+                    }
+                    else
+                    {
+                        MenuWindow menuWindow = new MenuWindow();
+                        App.Current.MainWindow.Close();
+                        App.Current.MainWindow = menuWindow;
+                        App.Current.MainWindow.Show();
+                    }
                 }
                 catch
                 {

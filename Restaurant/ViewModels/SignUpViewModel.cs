@@ -220,7 +220,7 @@ namespace Restaurant.ViewModels
         {
             string password = (param as PasswordBox).Password;
 
-            Regex regex = new Regex(@"@steak-house.com$");
+            Regex regex = new Regex(@"@steak-house.com$|@steakhouse.com$");
             if (regex.Match(email) != Match.Empty)
             {
                 MessageBox.Show("Only the admin can create\nan employee account!", "Account creation failed", MessageBoxButton.OK, MessageBoxImage.Error);

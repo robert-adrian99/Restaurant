@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Restaurant.Helps;
@@ -20,8 +21,38 @@ namespace Restaurant.Models.BusinessLogicLayer
                           select user).First();
         }
 
-        public void AddOrder(double price, List<ProductsInCart> productsInCart)
+        public bool AddOrder(double price, List<ProductsInCart> productsInCart)
         {
+            foreach (var productInCart in productsInCart)
+            {
+                try
+                {
+                    var productQuery = (from product in restaurantEntities.Product
+                                        where product.Name.Equals(productInCart.Name)
+                                        select product).First();
+
+                    if (productQuery.Quantity > productQuery.TotalQuantity)
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    var menuQuery = (from menu in restaurantEntities.Menu
+                                     join menu_product in restaurantEntities.Menu_Product
+                                     on menu.MenuID equals menu_product.MenuID
+                                     join product in restaurantEntities.Product
+                                     on menu_product.ProductID equals product.ProductID
+                                     where menu.Name.Equals(productInCart.Name)
+                                     select new { product.TotalQuantity, menu_product.Quantity }).First();
+
+                    if (menuQuery.Quantity > menuQuery.TotalQuantity)
+                    {
+                        return false;
+                    }
+                }
+            }
+
             Order newOrder = new Order()
             {
                 OrderNumber = Properties.Settings.Default.OrderNumber++,
@@ -65,9 +96,10 @@ namespace Restaurant.Models.BusinessLogicLayer
             }
 
             restaurantEntities.SaveChanges();
+            return true;
         }
 
-        public List<OrdersDisplay> GetActiveOrders()
+        public List<OrdersDisplay> GetActiveOrdersByUser()
         {
             var activeOrders = (from order in restaurantEntities.Order
                                 where order.UserID.Equals(activeUser.UserID)
@@ -93,7 +125,7 @@ namespace Restaurant.Models.BusinessLogicLayer
             List<OrdersDisplay> orders = new List<OrdersDisplay>();
 
             var allOrders = (from order in restaurantEntities.Order
-                             where order.UserID.Equals(activeUser.UserID) 
+                             where order.UserID.Equals(activeUser.UserID)
                              select new OrdersDisplay
                              {
                                  OrderNumber = order.OrderNumber,
@@ -102,7 +134,7 @@ namespace Restaurant.Models.BusinessLogicLayer
                                  Status = order.Status
                              }).ToList();
 
-            foreach(var order in allOrders)
+            foreach (var order in allOrders)
             {
                 if (order.Status.Contains(OrderStatus.Canceled.ToString()) || order.Status.Contains(OrderStatus.Delivered.ToString()))
                 {
@@ -152,6 +184,135 @@ namespace Restaurant.Models.BusinessLogicLayer
             restaurantEntities.Order.Attach(orderQuery);
             restaurantEntities.Entry(orderQuery).Property(x => x.Status).IsModified = true;
             restaurantEntities.SaveChanges();
+        }
+
+        public List<OrdersDisplay> GetActiveOrders()
+        {
+            List<OrdersDisplay> orders = new List<OrdersDisplay>();
+
+            var allOrders = (from order in restaurantEntities.Order
+                             orderby order.Date descending
+                             select new OrdersDisplay
+                             {
+                                 OrderNumber = order.OrderNumber,
+                                 Price = order.Price,
+                                 Date = order.Date,
+                                 Status = order.Status
+                             }).ToList();
+
+            foreach (var order in allOrders)
+            {
+                if (!order.Status.Contains(OrderStatus.Canceled.ToString())
+                    && !order.Status.Contains(OrderStatus.Delivered.ToString()))
+                {
+                    orders.Add(order);
+                }
+            }
+
+            return orders;
+        }
+
+        public List<OrdersDisplay> GetAllOrders()
+        {
+            return (from order in restaurantEntities.Order
+                    orderby order.Date descending
+                    select new OrdersDisplay
+                    {
+                        OrderNumber = order.OrderNumber,
+                        Price = order.Price,
+                        Date = order.Date,
+                        Status = order.Status
+                    }).ToList();
+        }
+
+        public bool UpdateStatusByOrder(OrdersDisplay orderDisplay, OrderStatus orderStatus)
+        {
+            try
+            {
+                var orderQuery = (from order in restaurantEntities.Order
+                                  where order.OrderNumber.Equals(orderDisplay.OrderNumber)
+                                  select order).First();
+
+                orderQuery.Status = orderStatus.ToString();
+
+                if (orderStatus == OrderStatus.Delivered)
+                {
+                    var productQuery = (from product in restaurantEntities.Product
+                                        join order_product in restaurantEntities.Order_Product
+                                        on product.ProductID equals order_product.ProductID
+                                        join order in restaurantEntities.Order
+                                        on order_product.OrderID equals order.OrderID
+                                        where order.OrderNumber.Equals(orderDisplay.OrderNumber)
+                                        select product).ToList();
+
+                    foreach (var product in productQuery)
+                    {
+                        product.TotalQuantity -= product.Quantity;
+                        restaurantEntities.Product.Attach(product);
+                        restaurantEntities.Entry(product).Property(x => x.TotalQuantity).IsModified = true;
+                    }
+
+                    var menuQuery = (from menu in restaurantEntities.Menu
+                                     join order_menu in restaurantEntities.Order_Menu
+                                     on menu.MenuID equals order_menu.MenuID
+                                     join order in restaurantEntities.Order
+                                     on order_menu.OrderID equals order.OrderID
+                                     join menu_product in restaurantEntities.Menu_Product
+                                     on menu.MenuID equals menu_product.MenuID
+                                     join product in restaurantEntities.Product
+                                     on menu_product.ProductID equals product.ProductID
+                                     where order.OrderNumber.Equals(orderDisplay.OrderNumber)
+                                     select product).ToList();
+
+                    foreach (var product in menuQuery)
+                    {
+                        //for(int pice = 0; piece < )
+                        product.TotalQuantity -= product.Quantity;
+                        restaurantEntities.Product.Attach(product);
+                        restaurantEntities.Entry(product).Property(x => x.TotalQuantity).IsModified = true;
+                    }
+
+                }
+
+                restaurantEntities.Order.Attach(orderQuery);
+                restaurantEntities.Entry(orderQuery).Property(x => x.Status).IsModified = true;
+
+                restaurantEntities.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void GetOrderDetails(OrdersDisplay ordersDisplay)
+        {
+            var productUserOrderQuery = (from order in restaurantEntities.Order
+                                         join order_product in restaurantEntities.Order_Product
+                                         on order.OrderID equals order_product.OrderID
+                                         join product in restaurantEntities.Product
+                                         on order_product.ProductID equals product.ProductID
+                                         join user in restaurantEntities.User
+                                         on order.UserID equals user.UserID
+                                         where order.OrderNumber.Equals(ordersDisplay.OrderNumber)
+                                         select new { order, product, user }).ToList();
+
+            var menuUserOrderQuery = (from order in restaurantEntities.Order
+                                      join order_menu in restaurantEntities.Order_Menu
+                                      on order.OrderID equals order_menu.OrderID
+                                      join menu in restaurantEntities.Menu
+                                      on order_menu.MenuID equals menu.MenuID
+                                      join user in restaurantEntities.User
+                                      on order.UserID equals user.UserID
+                                      where order.OrderNumber.Equals(ordersDisplay.OrderNumber)
+                                      select new { order, menu, user }).ToList();
+
+            var item = productUserOrderQuery;
+            //foreach (var item in productUserOrderQuery)
+            //{
+
+            //}
         }
     }
 }

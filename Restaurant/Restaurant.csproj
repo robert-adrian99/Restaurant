@@ -87,6 +87,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\OrderDetails.cs" />
     <Compile Include="Models\Entity\OrdersDisplay.cs" />
     <Compile Include="Models\Entity\ProductsDisplay.cs" />
     <Compile Include="Models\Entity\ProductsInCart.cs" />
@@ -160,8 +161,10 @@
       <DependentUpon>RestaurantModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DetailsViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeViewOrdersViewModel.cs" />
     <Compile Include="ViewModels\MenuNoAccountViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\SeeCartViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
@@ -170,11 +173,20 @@
     <Compile Include="Views\DetailsWindow.xaml.cs">
       <DependentUpon>DetailsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EmployeeStartWindow.xaml.cs">
+      <DependentUpon>EmployeeStartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmployeeViewOrdersWindow.xaml.cs">
+      <DependentUpon>EmployeeViewOrdersWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuNoAccountWindow.xaml.cs">
       <DependentUpon>MenuNoAccountWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrderDetails.xaml.cs">
+      <DependentUpon>OrderDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchWindow.xaml.cs">
       <DependentUpon>SearchWindow.xaml</DependentUpon>
@@ -234,11 +246,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EmployeeStartWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EmployeeViewOrdersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MenuNoAccountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrderDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
