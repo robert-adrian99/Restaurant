@@ -10,6 +10,7 @@ using System.Windows.Input;
 using Restaurant.Helps;
 using Restaurant.Models.BusinessLogicLayer;
 using Restaurant.Models.Entity;
+using Restaurant.Views;
 
 namespace Restaurant.ViewModels
 {
@@ -106,7 +107,6 @@ namespace Restaurant.ViewModels
                         if (order.UpdateStatusByOrder(SelectedItemList, nextOrderStatus))
                         {
                             OrdersDisplays = new ObservableCollection<OrdersDisplay>(order.GetActiveOrders());
-                            order.GetOrderDetails(SelectedItemList);
                             MessageBox.Show("Status changed");
                         }
                         else
@@ -115,6 +115,35 @@ namespace Restaurant.ViewModels
                         }
                     }
                 }
+            }
+        }
+
+        private ICommand seeDetailsCommand;
+        public ICommand SeeDetailsCommand
+        {
+            get
+            {
+                if (seeDetailsCommand == null)
+                {
+                    seeDetailsCommand = new RelayCommand(SeeDetails, param => CanExecuteCommand);
+                }
+                return seeDetailsCommand;
+            }
+        }
+
+        public void SeeDetails(object param)
+        {
+            if (SelectedItemList == null)
+            {
+                MessageBox.Show("Select an order");
+            }
+            else
+            {
+                OrderDetails orderDetails = order.GetOrderDetails(SelectedItemList);
+                OrderDetailsWindow orderDetailsWindow = new OrderDetailsWindow();
+                OrderDetailsViewModel orderDetailsViewModel = new OrderDetailsViewModel(orderDetails);
+                orderDetailsWindow.DataContext = orderDetailsViewModel;
+                orderDetailsWindow.ShowDialog();
             }
         }
         #endregion

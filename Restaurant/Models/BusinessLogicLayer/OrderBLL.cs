@@ -286,8 +286,9 @@ namespace Restaurant.Models.BusinessLogicLayer
             }
         }
 
-        public void GetOrderDetails(OrdersDisplay ordersDisplay)
+        public OrderDetails GetOrderDetails(OrdersDisplay ordersDisplay)
         {
+
             var productUserOrderQuery = (from order in restaurantEntities.Order
                                          join order_product in restaurantEntities.Order_Product
                                          on order.OrderID equals order_product.OrderID
@@ -296,6 +297,7 @@ namespace Restaurant.Models.BusinessLogicLayer
                                          join user in restaurantEntities.User
                                          on order.UserID equals user.UserID
                                          where order.OrderNumber.Equals(ordersDisplay.OrderNumber)
+                                         orderby order.OrderNumber
                                          select new { order, product, user }).ToList();
 
             var menuUserOrderQuery = (from order in restaurantEntities.Order
@@ -306,13 +308,60 @@ namespace Restaurant.Models.BusinessLogicLayer
                                       join user in restaurantEntities.User
                                       on order.UserID equals user.UserID
                                       where order.OrderNumber.Equals(ordersDisplay.OrderNumber)
+                                      orderby order.OrderNumber
                                       select new { order, menu, user }).ToList();
 
-            var item = productUserOrderQuery;
-            //foreach (var item in productUserOrderQuery)
-            //{
+            var prod = productUserOrderQuery.Count != 0 ? productUserOrderQuery[0] : null;
+            var prodFin = prod == null ? menuUserOrderQuery[0] : null;
 
-            //}
+            List<ProductsDetails> productQuantity = new List<ProductsDetails>();
+
+            foreach (var item in productUserOrderQuery)
+            {
+                bool ok = false;
+                for (int index = 0; index < productQuantity.Count; index++)
+                {
+                    if (productQuantity[index].Name == item.product.Name)
+                    {
+                        productQuantity[index].Quantity += 1;
+                        ok = true;
+                        break;
+                    }
+                }
+                if (!ok)
+                {
+                    productQuantity.Add(new ProductsDetails { Name = item.product.Name, Quantity = 1 });
+                }
+            }
+
+            foreach (var item in menuUserOrderQuery)
+            {
+
+                bool ok = false;
+                for (int index = 0; index < productQuantity.Count; index++)
+                {
+                    if (productQuantity[index].Name == item.menu.Name)
+                    {
+                        productQuantity[index].Quantity += 1;
+                        ok = true;
+                        break;
+                    }
+                }
+                if (!ok)
+                {
+                    productQuantity.Add(new ProductsDetails { Name = item.menu.Name, Quantity = 1 });
+                }
+            }
+
+            OrderDetails orderDetails = new OrderDetails
+            {
+                OrderDetail = prodFin == null ? prod.order : prodFin.order,
+                EstimatedDate = prodFin == null ? prod.order.Date.AddMinutes(Constants.DeliveryTime) : prodFin.order.Date.AddMinutes(Constants.DeliveryTime),
+                UserDetail = prodFin == null ? prod.user : prodFin.user,
+                Products = productQuantity
+            };
+
+            return orderDetails;
         }
     }
 }

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Restaurant.Views"
         xmlns:help="clr-namespace:Restaurant.Helps"
         xmlns:ctx="clr-namespace:Restaurant.ViewModels"
+        xmlns:local="clr-namespace:Restaurant.Views"
         mc:Ignorable="d"
         Title="Steak House" Height="700" Width="1000" Icon="/Restaurant;component/Assets/Icon.png" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
@@ -64,7 +64,9 @@
 
         <ListBox HorizontalAlignment="Left" Height="430" VerticalAlignment="Top" Width="900" Margin="50,210,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding OrdersDisplays}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItemList}"/>
 
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="CHANGE STATUS" HorizontalAlignment="Right" Margin="0,75,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding ChangeStatusCommand}"/>
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="CHANGE STATUS" HorizontalAlignment="Right" Margin="0,80,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding ChangeStatusCommand}"/>
+
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEE DETAILS ABOUT ORDER" HorizontalAlignment="Right" Margin="0,20,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding SeeDetailsCommand}"/>
 
     </Grid>
 </Window>
