@@ -70,9 +70,9 @@ namespace Restaurant.Models.BusinessLogicLayer
         public List<OrdersDisplay> GetActiveOrders()
         {
             var activeOrders = (from order in restaurantEntities.Order
-                                where !order.Status.Equals(OrderStatus.Canceled.ToString())
+                                where order.UserID.Equals(activeUser.UserID)
+                                && !order.Status.Equals(OrderStatus.Canceled.ToString())
                                 && !order.Status.Equals(OrderStatus.Delivered.ToString())
-                                && order.UserID.Equals(activeUser.UserID)
                                 select new OrdersDisplay
                                 {
                                     OrderNumber = order.OrderNumber,
@@ -90,8 +90,10 @@ namespace Restaurant.Models.BusinessLogicLayer
 
         public List<OrdersDisplay> GetAllOrders()
         {
+            List<OrdersDisplay> orders = new List<OrdersDisplay>();
+
             var allOrders = (from order in restaurantEntities.Order
-                             where order.UserID.Equals(activeUser.UserID)
+                             where order.UserID.Equals(activeUser.UserID) 
                              select new OrdersDisplay
                              {
                                  OrderNumber = order.OrderNumber,
@@ -100,11 +102,32 @@ namespace Restaurant.Models.BusinessLogicLayer
                                  Status = order.Status
                              }).ToList();
 
-            foreach (var order in allOrders)
+            foreach(var order in allOrders)
+            {
+                if (order.Status.Contains(OrderStatus.Canceled.ToString()) || order.Status.Contains(OrderStatus.Delivered.ToString()))
+                {
+                    orders.Add(order);
+                }
+            }
+
+            foreach (var order in orders)
             {
                 order.EstimatedDate = order.Date.AddMinutes(Constants.DeliveryTime);
             }
-            return allOrders;
+            return orders;
+        }
+
+        public void CancelOrder(OrdersDisplay activeOrder)
+        {
+            var orderQuery = (from order in restaurantEntities.Order
+                              where order.OrderNumber.Equals(activeOrder.OrderNumber)
+                              select order).First();
+
+            orderQuery.Status = OrderStatus.Canceled.ToString();
+
+            restaurantEntities.Order.Attach(orderQuery);
+            restaurantEntities.Entry(orderQuery).Property(x => x.Status).IsModified = true;
+            restaurantEntities.SaveChanges();
         }
     }
 }

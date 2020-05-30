@@ -61,12 +61,12 @@
         <Label Content="ORDER DATE&#xa;ESTIMATED DATE" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Left" Margin="150,170,0,0"  VerticalAlignment="Top"/>
 
         <Label Content="STATUS&#xa;Price ($)" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Left" Margin="380,170,0,0"  VerticalAlignment="Top"/>
-        
+
         <ListBox HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="350" Width="465" Margin="20,0,0,80" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" SelectedItem="{Binding SelectedActiveOrder}" ItemsSource="{Binding ActiveOrders}" ItemTemplateSelector="{StaticResource Selector}"/>
 
         <Button Style="{StaticResource RoundedButtonStyle}" Content="CANCEL ORDER" HorizontalAlignment="Left" Margin="120,0,0,10" VerticalAlignment="Bottom" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding CancelCommand}"/>
 
-        <Label Content="ALL ORDERS" HorizontalAlignment="Right" Margin="0,70,50,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
+        <Label Content="DELIVERED OR&#xa;CANCELED ORDERS" HorizontalAlignment="Right" Margin="0,70,50,0" VerticalAlignment="Top" FontFamily="Segoe UI Black" FontSize="20"/>
 
         <Label Content="NUMBER" FontFamily="Segoe UI Black" FontSize="20" HorizontalAlignment="Right" Margin="0,200,380,0" VerticalAlignment="Top"/>
 
