@@ -53,7 +53,7 @@
 
         <Label Content="Price ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="830,171,44,460" Height="40"/>
         
-        <ListBox HorizontalAlignment="Left" Height="270" VerticalAlignment="Top" Width="900" Margin="50,216,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding ProductsInCarts}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItem}"/>
+        <ListBox HorizontalAlignment="Left" Height="270" VerticalAlignment="Top" Width="900" Margin="50,216,0,0" Background="Transparent" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding ProductsInCarts}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItem}"/>
 
         <Label Content="Subtotal ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="639,495,214,136" Height="40" HorizontalContentAlignment="Right"/>
 

@@ -32,7 +32,7 @@ namespace Restaurant.Views
             App.Current.MainWindow.Show();
         }
 
-        private void SeeOrders(object sender, RoutedEventArgs e)
+        private void SeeOrdersClick(object sender, RoutedEventArgs e)
         {
             EmployeeViewOrdersWindow employeeViewOrdersWindow = new EmployeeViewOrdersWindow();
             App.Current.MainWindow.Close();
@@ -40,9 +40,12 @@ namespace Restaurant.Views
             App.Current.MainWindow.Show();
         }            
         
-        private void SeeAllProductsClick(object sender, RoutedEventArgs e)
+        private void SeeProductsClick(object sender, RoutedEventArgs e)
         {
-
+            ProductNearExhaustionWindow productNearExhaustionWindow = new ProductNearExhaustionWindow();
+            App.Current.MainWindow.Close();
+            App.Current.MainWindow = productNearExhaustionWindow;
+            App.Current.MainWindow.Show();
         }
     }
 }

@@ -72,5 +72,13 @@ namespace Restaurant.Helps
                 return int.Parse(ConfigurationManager.AppSettings.Get("deliveryTime"));
             }
         }
+
+        static public int MinTotalQuantity
+        {
+            get
+            {
+                return int.Parse(ConfigurationManager.AppSettings.Get("minTotalQuantity"));
+            }
+        }
     }
 }

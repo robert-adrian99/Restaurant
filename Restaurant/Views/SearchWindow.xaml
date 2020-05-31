@@ -71,7 +71,7 @@
 
         <Label Content="PRICE ($)" FontFamily="Segoe UI Black" FontSize="20" Margin="804,222,70,409" Height="40" Width="120"/>
 
-        <ListBox HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="900" Margin="50,265,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding ProductsDisplay}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItemList}"/>
+        <ListBox HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="900" Margin="50,265,0,0" Background="Transparent" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding ProductsDisplay}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItemList}"/>
 
         <Button Style="{StaticResource RoundedButtonStyle}" Content="DETAILS ABOUT PRODUCT" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding SeeDetailsCommand}"/>
 

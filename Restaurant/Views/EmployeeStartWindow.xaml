@@ -33,9 +33,9 @@
             <Image  Source="/Restaurant;component/Assets/SteakHouse.png"/>
         </Button>
 
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEE ORDERS" HorizontalAlignment="Left" Margin="40,200,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Click="SeeOrders"/>
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEE ORDERS" HorizontalAlignment="Left" Margin="40,250,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Click="SeeOrdersClick"/>
 
-        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEE ALL PRODUCTS" HorizontalAlignment="Left" Margin="40,275,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Click="SeeAllProductsClick"/>
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="SEE PRODUCTS NEAR EXHAUSTION" HorizontalAlignment="Left" Margin="40,350,0,0" VerticalAlignment="Top" Width="400" Cursor="Hand" BorderThickness="0" Height="60" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Click="SeeProductsClick"/>
 
     </Grid>
 </Window>

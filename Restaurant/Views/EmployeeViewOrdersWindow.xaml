@@ -62,7 +62,7 @@
 
         <Label Content="Date" FontFamily="Segoe UI Black" FontSize="20" Margin="676,165,198,466" Height="40" Width="120"/>
 
-        <ListBox HorizontalAlignment="Left" Height="430" VerticalAlignment="Top" Width="900" Margin="50,210,0,0" Background="{x:Null}" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding OrdersDisplays}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItemList}"/>
+        <ListBox HorizontalAlignment="Left" Height="430" VerticalAlignment="Top" Width="900" Margin="50,210,0,0" Background="Transparent" BorderBrush="Black" FontFamily="Segoe UI Black" FontSize="20" ItemsSource="{Binding OrdersDisplays}" ItemTemplateSelector="{StaticResource Selector}" SelectedItem="{Binding SelectedItemList}"/>
 
         <Button Style="{StaticResource RoundedButtonStyle}" Content="CHANGE STATUS" HorizontalAlignment="Right" Margin="0,80,50,0" VerticalAlignment="Top" Width="300" Cursor="Hand" BorderThickness="0" Height="50" FontFamily="Segoe UI Black" FontWeight="Bold" FontSize="20" Command="{Binding ChangeStatusCommand}"/>
 

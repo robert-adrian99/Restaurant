@@ -52,14 +52,6 @@ namespace Restaurant.ViewModels
             }
         }
 
-        public double DeliveryCost
-        {
-            get
-            {
-                return Constants.DeliveryCost;
-            }
-        }
-
         public string Status
         {
             get

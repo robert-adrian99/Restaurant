@@ -52,8 +52,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                               {
                                   Name = menu.Name,
                                   Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
-                                              where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum(),
+                                                   where menu.MenuID.Equals(menu_product.MenuID)
+                                                   select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
@@ -117,8 +117,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                               {
                                   Name = menu.Name,
                                   Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
-                                              where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum(),
+                                                   where menu.MenuID.Equals(menu_product.MenuID)
+                                                   select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
@@ -198,8 +198,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                               {
                                   Name = menu.Name,
                                   Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
-                                              where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum(),
+                                                   where menu.MenuID.Equals(menu_product.MenuID)
+                                                   select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
@@ -256,7 +256,7 @@ namespace Restaurant.Models.BusinessLogicLayer
                 {
                     product.Allergens = restaurantEntities.GetAllergensByProduct(product.Name).ToList();
                     bool ok = true;
-                    foreach(var allergen in product.Allergens)
+                    foreach (var allergen in product.Allergens)
                     {
                         if (allergen.ToLower().Contains(allergenName.ToLower()))
                         {
@@ -275,8 +275,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                               {
                                   Name = menu.Name,
                                   Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
-                                              where menu.MenuID.Equals(menu_product.MenuID)
-                                              select menu_product.Quantity).Sum(),
+                                                   where menu.MenuID.Equals(menu_product.MenuID)
+                                                   select menu_product.Quantity).Sum(),
                                   Price = (from product in restaurantEntities.Product
                                            join menu_product in restaurantEntities.Menu_Product
                                            on product.ProductID equals menu_product.ProductID
@@ -388,8 +388,8 @@ namespace Restaurant.Models.BusinessLogicLayer
                              {
                                  Name = menu.Name,
                                  Quantity = (int)(from menu_product in restaurantEntities.Menu_Product
-                                             where menu.MenuID.Equals(menu_product.MenuID)
-                                             select menu_product.Quantity).Sum(),
+                                                  where menu.MenuID.Equals(menu_product.MenuID)
+                                                  select menu_product.Quantity).Sum(),
                                  Price = (from product in restaurantEntities.Product
                                           join menu_product in restaurantEntities.Menu_Product
                                           on product.ProductID equals menu_product.ProductID
@@ -417,6 +417,25 @@ namespace Restaurant.Models.BusinessLogicLayer
 
                 return query;
             }
+        }
+
+        public List<ProductsDisplay> GetProductsWithTotalQuantity(string categoryName)
+        {
+            List<ProductsDisplay> productsList = new List<ProductsDisplay>();
+            var products = (from product in restaurantEntities.Product
+                            where product.TotalQuantity <= Constants.MinTotalQuantity && product.Category.Name == categoryName
+                            select product).ToList();
+
+            foreach (var product in products)
+            {
+                productsList.Add(new ProductsDisplay
+                {
+                    Name = product.Name,
+                    Quantity = (int)product.TotalQuantity
+                });
+            }
+
+            return productsList;
         }
     }
 }
