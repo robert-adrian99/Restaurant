@@ -26,9 +26,9 @@ namespace Restaurant.Views
 
         private void BackClick(object sender, RoutedEventArgs e)
         {
-            StartWindow startWindow = new StartWindow();
+            EmployeeStartWindow employeeStartWindow = new EmployeeStartWindow();
             App.Current.MainWindow.Close();
-            App.Current.MainWindow = startWindow;
+            App.Current.MainWindow = employeeStartWindow;
             App.Current.MainWindow.Show();
         }
     }
