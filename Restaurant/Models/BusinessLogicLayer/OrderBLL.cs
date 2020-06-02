@@ -152,11 +152,11 @@ namespace Restaurant.Models.BusinessLogicLayer
         public List<OrdersDisplay> GetAllOrdersInTimeInterval()
         {
             DateTime dateTime = DateTime.Now;
-            DateTime newDate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day - Constants.DiscountTime, dateTime.Hour, dateTime.Minute, dateTime.Second, dateTime.Millisecond);
+            dateTime = dateTime.Subtract(TimeSpan.FromDays(Constants.DiscountTime));
 
             var allOrders = (from order in restaurantEntities.Order
                              where order.UserID.Equals(activeUser.UserID)
-                             && order.Date > newDate
+                             && order.Date > dateTime
                              select new OrdersDisplay
                              {
                                  OrderNumber = order.OrderNumber,
