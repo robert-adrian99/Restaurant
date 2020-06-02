@@ -65,7 +65,7 @@
 
         <Label Content="CATEGORY" FontFamily="Segoe UI Black" FontSize="20" Margin="50,222,744,409" Width="200" Height="40"/>
 
-        <Label Content="PRODUCT NAME" FontFamily="Segoe UI Black" FontSize="20" Margin="300,222,526,409" Width="200" Height="40"/>
+        <Label Content="PRODUCT NAME" FontFamily="Segoe UI Black" FontSize="20" Margin="294,222,450,409" Width="200" Height="40"/>
 
         <Label Content="QUANTITY (G)" FontFamily="Segoe UI Black" FontSize="20" Margin="593,222,240,409" Height="40"/>
 
