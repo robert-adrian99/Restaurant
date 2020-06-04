@@ -26,7 +26,7 @@ __The menu looks like this for a customer that doesn't have an account. From her
 |:---:|:---:|
 | ![](images/Search.gif) | ![](images/Orders.gif) |
 
-__Those who have an account can place an order, see their cart from where they can delete a previously added product. Also the user who is registered can see his order history.__
+__Those who have an account can place an order and see their cart, from where they can delete a previously added product. Also the user who is registered can see his order history.__
 
 ## Employee section
 
@@ -37,7 +37,7 @@ __The app has a section for employees which can be accessed by them logging in u
 
 __In orders view the employee can see all orders sorted descending by date. From the drop-down menu he can choose `ACTIVE ORDERS` and so the status of an order can be changed to `PREPARING`, `LEFT`, or `DELIVERED`. When pressing `SEE DETAILS ABOUT ORDER` button - only after an order is selected - he can see details about it, such as the user who placed it, the products he ordered, total price, and how many pieces of each product.__
 
-__The employee can also see products near exhaustion - products that have a total quantity in store less than `1000g` grouped by category.__
+__The employee can also see products near exhaustion - products that have a total quantity in store less than or equals to `1000g` grouped by category.__
 
 | ![](images/EmployeeOrders.gif) | ![](images/EmployeeProducts.gif) |
 |:---:|:---:|
