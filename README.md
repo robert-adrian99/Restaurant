@@ -3,7 +3,7 @@
 **This application represents a management system for a restaurant**
 
 - __This project is an implementation in C# using WPF in Visual Studio.__
-- __I created this application as part of the Visual Programming Enviroments' laboratories at the university.__
+- __I created this application as part of the Visual Programming Environments' laboratories at the university.__
 - __This app is structured on the Model-View-ViewModel architecture.__
 - __The app connects to a database made in SQL Server.__
 - __For connecting to database I used EntityFramework - some of the queries are stored procedures and the rest are written using LINQ.__
