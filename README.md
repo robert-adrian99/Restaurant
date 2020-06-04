@@ -35,7 +35,7 @@ __The app has a section for employees which can be accessed by them logging in u
 | ![](images/EmployeeLogin.png) | ![](images/EmployeeStartPage.png) |
 |:---:|:---:|
 
-__In orders view the employee can see all orders sorted by date descending. From the drop-down menu the employee can choose `ACTIVE ORDERS` and so he can change the status of an order to be `PREPARING`, `LEFT`, or `DELIVERED`.__
+__In orders view the employee can see all orders sorted by date descending. From the drop-down menu he can choose `ACTIVE ORDERS` and so the status of an order can be changed to `PREPARING`, `LEFT`, or `DELIVERED`. When pressing `SEE DETAILS ABOUT ORDER` button - only after an order is selected - he can see details about it, such as the user who placed it, the products he ordered, total price, and how many pieces of each product.__
 
 __The employee can also see products near exhaustion - products that have a total quantity in store less then `1000g` grouped by category.__
 
